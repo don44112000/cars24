@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, ShoppingCart, Tag, FileCheck, ChevronDown, Clock, Shield, FileText, Scale } from 'lucide-react';
+import { ArrowRight, FileCheck, ChevronDown, Clock, Shield, FileText, Scale, Sparkles, Wand2, Printer, Zap } from 'lucide-react';
 import styles from './Landing.module.css';
 
 const faqs = [
@@ -62,40 +62,65 @@ export default function Landing() {
         </motion.div>
       </section>
 
-      {/* ── Role Selection ── */}
-      <section className={styles.roleSection}>
+      {/* ── Smart Forms ── */}
+      <section className={styles.smartSection}>
         <div className="container">
-          <h2 className={styles.sectionTitle}>Choose Your Role</h2>
-          <p className={styles.sectionSub}>
-            Select whether you're buying or selling to get your personalised checklist
-          </p>
-          <div className={styles.roleGrid}>
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Link to="/start?role=buyer" className={styles.roleCard}>
-                <div className={`${styles.roleIcon} ${styles.roleIconBuyer}`}>
-                  <ShoppingCart size={32} />
+          <motion.div
+            className={styles.smartCard}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className={styles.smartLeft}>
+              <div className={styles.smartBadge}>
+                <Sparkles size={14} />
+                AI-Assisted
+              </div>
+              <h2 className={styles.smartTitle}>
+                Smart RTO <span>Form Generator</span>
+              </h2>
+              <p className={styles.smartDesc}>
+                Skip the paperwork hassle. Pick a form, answer a few simple questions, and get a
+                pre-filled, print-ready RTO form — Forms 28, 29, 30, 32, 35 and 36, all in one place.
+              </p>
+              <ul className={styles.smartFeatures}>
+                <li><Wand2 size={16} /> Auto-fills owner, vehicle &amp; bank details</li>
+                <li><Printer size={16} /> Live preview, edit &amp; print or save as PDF</li>
+                <li><Zap size={16} /> Generates in seconds — no app downloads</li>
+              </ul>
+              <div className={styles.smartCta}>
+                <Link to="/forms" className={styles.btnPrimary}>
+                  Generate a Form <ArrowRight size={18} />
+                </Link>
+              </div>
+            </div>
+            <div className={styles.smartRight} aria-hidden="true">
+              <div className={styles.smartMock}>
+                <div className={styles.smartMockHeader}>
+                  <span className={styles.smartMockBadge}>Form 29</span>
+                  <span className={styles.smartMockTitle}>Notice of Transfer</span>
                 </div>
-                <h3 className={styles.roleTitle}>I'm a Buyer</h3>
-                <p className={styles.roleDesc}>
-                  Verify the vehicle, check documents, and complete the RC transfer to your name.
-                </p>
-                <span className={styles.roleCount}>21 Checkpoints</span>
-              </Link>
-            </motion.div>
-
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Link to="/start?role=seller" className={styles.roleCard}>
-                <div className={`${styles.roleIcon} ${styles.roleIconSeller}`}>
-                  <Tag size={32} />
+                <div className={styles.smartMockBody}>
+                  <div className={styles.smartMockRow}>
+                    <span>Reg. No.</span><strong>MH 12 AB 1234</strong>
+                  </div>
+                  <div className={styles.smartMockRow}>
+                    <span>Seller</span><strong>Anmol Patil</strong>
+                  </div>
+                  <div className={styles.smartMockRow}>
+                    <span>Buyer</span><strong>Rahul Sharma</strong>
+                  </div>
+                  <div className={styles.smartMockRow}>
+                    <span>Sale Date</span><strong>03/05/2026</strong>
+                  </div>
                 </div>
-                <h3 className={styles.roleTitle}>I'm a Seller</h3>
-                <p className={styles.roleDesc}>
-                  Clear dues, prepare documents, and protect yourself from post-sale liability.
-                </p>
-                <span className={styles.roleCount}>14 Checkpoints</span>
-              </Link>
-            </motion.div>
-          </div>
+                <div className={styles.smartMockFooter}>
+                  <Sparkles size={12} /> Pre-filled & print-ready
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 

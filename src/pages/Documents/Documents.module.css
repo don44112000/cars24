@@ -91,21 +91,95 @@
   border-bottom: none;
 }
 
-.table tr:hover td {
+/* ── Clickable form rows ── */
+.tableRow {
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.tableRow:hover td {
   background: var(--color-primary-50);
 }
 
-/* ── Doc Checklist ── */
-.checklistSection {
-  margin-top: var(--space-2xl);
+.tableRowSelected td {
+  background: var(--color-primary-50) !important;
 }
 
-.checklistTitle {
-  font-size: var(--font-size-lg);
+.generateBtn {
+  font-size: var(--font-size-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-primary);
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+
+.generateBtnActive {
+  color: var(--color-text-secondary);
+}
+
+/* ── Mini wizard ── */
+.wizardWrap {
+  margin-top: var(--space-xl);
+}
+
+.wizardHint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+}
+
+.fieldGroupWrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.groupLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-secondary);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.wizardActions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.cardBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-sm) var(--space-xl);
+  font-size: var(--font-size-sm);
   font-weight: var(--fw-bold);
-  margin-bottom: var(--space-md);
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--color-cta);
+  color: white;
+  box-shadow: 0 4px 14px rgba(239, 108, 0, 0.25);
 }
 
+.cardBtn:hover {
+  background: var(--color-cta-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(239, 108, 0, 0.35);
+}
+
+/* ── Doc Checklist ── */
 .checklistGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -149,6 +223,10 @@
 
 @media (max-width: 768px) {
   .checklistGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fieldGrid {
     grid-template-columns: 1fr;
   }
 }

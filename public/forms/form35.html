@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form 35 - Notice of Termination of Agreement of Hire-Purchase/Lease/Hypothecation</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #e0e0e0;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 13pt;
+      color: #000;
+    }
+
+    /* ── A4 Page ── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      margin: 20px auto;
+      padding: 22mm 22mm 20mm 25mm;
+      box-shadow: 0 0 12px rgba(0,0,0,0.25);
+    }
+
+    /* ── Headings ── */
+    .form-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 14pt;
+      margin-bottom: 4px;
+    }
+    .refer-rule {
+      text-align: center;
+      font-size: 12.5pt;
+      margin-bottom: 5px;
+    }
+    .form-subtitle {
+      text-align: center;
+      font-weight: bold;
+      font-size: 12.5pt;
+      text-transform: uppercase;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+    .office-heading {
+      text-align: center;
+      font-weight: bold;
+      font-size: 12.5pt;
+      text-transform: uppercase;
+      margin: 14px 0 8px;
+    }
+
+    /* ── Body text ── */
+    p, .line-block {
+      font-size: 12.5pt;
+      line-height: 1.6;
+      text-align: justify;
+      margin: 0;
+    }
+    .intro-note {
+      font-size: 12.5pt;
+      line-height: 1.55;
+      text-align: justify;
+      margin-bottom: 10px;
+    }
+    .indent    { padding-left: 36px; }
+    .to-label  { font-size: 12.5pt; margin-bottom: 3px; }
+
+    /* ── Inline fields ── */
+    input.f {
+      border: none;
+      border-bottom: 1px dotted #555;
+      outline: none;
+      background: transparent;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12.5pt;
+      color: #000;
+      vertical-align: bottom;
+      padding: 0 2px;
+    }
+    input.f:focus {
+      border-bottom: 1.5px solid #1a56db;
+      background: #f0f6ff;
+    }
+
+    /* ── Two-column rows ── */
+    .two-col {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 6px;
+    }
+    .two-col .left  { flex: 0 0 38%; font-size: 12.5pt; }
+    .two-col .right { flex: 0 0 58%; font-size: 12.5pt; text-align: left; }
+    .two-col .right input.f { width: 92%; }
+
+    /* Ref + Office row */
+    .ref-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+      font-size: 12.5pt;
+    }
+
+    /* ── Gaps ── */
+    .gap    { margin-top: 12px; }
+    .gap-sm { margin-top:  6px; }
+    .gap-lg { margin-top: 18px; }
+
+    /* ── Italic / footnote ── */
+    .strike-note { font-style: italic; font-size: 12pt; margin-top: 10px; }
+
+    /* ── Specimen sig block ── */
+    .specimen-block { font-size: 12.5pt; margin-top: 8px; line-height: 2.2; }
+    .specimen-block input.f { width: 70%; }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      width: 210mm;
+      margin: 0 auto 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .toolbar button {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+    }
+    .btn-print { background: #1a56db; color: #fff; }
+    .btn-clear { background: #e5e7eb; color: #111; }
+    .btn-print:hover { background: #1647bf; }
+    .btn-clear:hover { background: #d1d5db; }
+    .toolbar-info { font-size: 12px; color: #555; font-family: Arial, sans-serif; }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; box-shadow: none; padding: 20mm 22mm 18mm 25mm; }
+      .no-print { display: none; }
+      input.f { border-bottom: 1px dotted #000 !important; background: transparent !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="form-title">FORM 35</div>
+  <div class="refer-rule">[<em>Refer Rule 61(1)</em>]</div>
+  <div class="form-subtitle">
+    Notice of Termination of Agreement of<br/>
+    *Hire-Purchase/Lease/Hypothecation
+  </div>
+
+  <!-- Intro note -->
+  <p class="intro-note">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(To be made in duplicate and in triplicate where the original registering authority
+    is different, the duplicate copy and the triplicate copy with the endorsement of the
+    registering authority to be returned to the financier and registering authority
+    simultaneously on making the termination entry in the certificate of the registration and
+    in Form 24.)
+  </p>
+
+  <!-- To block -->
+  <div class="to-label">To</div>
+  <div class="indent line-block">The Registering Authority</div>
+  <div class="indent line-block">
+    <input class="f" type="text" id="f_reg_authority" size="46"
+      placeholder="............................................" title="Name / place of Registering Authority" />
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- Main declaration paragraph -->
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We hereby declare that the agreement of hire-purchase/lease/hypothecation
+    entered into between us has been terminated. We, therefore, request that the note
+    endorsed in the certificate of registration of vehicle No.
+    <input class="f" type="text" id="f_vehicle_no" size="14"
+      placeholder="............." title="Vehicle registration number" />
+    in respect of the said agreement between us be cancelled.
+  </p>
+
+  <div class="gap-sm"></div>
+
+  <!-- Mobile -->
+  <p class="line-block indent">
+    My/Our mobile number is
+    <input class="f" type="text" id="f_mobile" size="34"
+      placeholder="................................." title="Mobile number" />
+  </p>
+
+  <div class="gap-sm"></div>
+
+  <!-- RC enclosed -->
+  <p class="line-block indent">
+    The certificate of registration together with the fee is enclosed.
+  </p>
+
+  <div class="gap"></div>
+
+  <!-- Date + Owner sig -->
+  <div class="two-col">
+    <div class="left">
+      Date<input class="f" type="text" id="f_date_owner" size="20"
+        placeholder="................." title="Date (Registered owner)" />
+    </div>
+    <div class="right">
+      Signature or thumb impression of the registered owner<br/>
+      <input class="f" type="text" id="f_sig_owner" size="46"
+        placeholder="............................................" title="Signature / thumb impression of registered owner" />
+    </div>
+  </div>
+
+  <!-- Date + Financier sig -->
+  <div class="two-col" style="margin-top:8px;">
+    <div class="left">
+      Date<input class="f" type="text" id="f_date_financier" size="20"
+        placeholder="................." title="Date (Financier)" />
+    </div>
+    <div class="right">
+      Signature of the financier with official seal and address<br/>
+      <input class="f" type="text" id="f_sig_financier" size="46"
+        placeholder="............................................" title="Signature of financier with seal and address" />
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- Strike note -->
+  <div class="strike-note">* <em>Strike out whichever is inapplicable.</em></div>
+
+  <!-- ══ OFFICE ENDORSEMENT ══ -->
+  <div class="office-heading">Office Endorsement</div>
+
+  <!-- Ref + Office row -->
+  <div class="ref-row">
+    <span>
+      Ref. Number<input class="f" type="text" id="f_ref_no" size="14"
+        placeholder="............." title="Reference Number" />
+    </span>
+    <span>
+      Office of the
+      <input class="f" type="text" id="f_office_of" size="32"
+        placeholder="....................................." title="Office name / place" />
+    </span>
+  </div>
+
+  <!-- Cancellation paragraph -->
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The cancellation of the entry of an agreement as requested above is recorded in this
+    office registration record in Form 24 and registration certificate on<input class="f" type="text"
+      id="f_recorded_on" size="14" placeholder="............." title="Date of recording" />(date).
+  </p>
+
+  <div class="gap"></div>
+
+  <!-- RA sig right-aligned -->
+  <div style="text-align:right; font-size:12.5pt;">
+    <input class="f" type="text" id="f_sig_ra_dots" size="54"
+      placeholder="....................................................." title="Registering authority signature" />
+  </div>
+
+  <!-- Date + RA sig label -->
+  <div class="two-col" style="margin-top:6px;">
+    <div class="left">
+      Date<input class="f" type="text" id="f_date_office" size="16"
+        placeholder="..............." title="Office date" />
+    </div>
+    <div class="right" style="text-align:right;">
+      Signature of the registering authority
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- To block (final) -->
+  <div class="to-label">To</div>
+  <div class="indent line-block">
+    The Financier
+    <input class="f" type="text" id="f_to_financier" size="52"
+      placeholder="................................................." title="Financier name / address" />
+  </div>
+  <div class="indent line-block">
+    The Registering Authority
+    <input class="f" type="text" id="f_to_ra" size="30"
+      placeholder="............................." title="Registering Authority name / place" />
+  </div>
+  <div class="indent line-block">
+    (To be sent to both the above parties by registered post acknowledgement due)
+  </div>
+
+  <div class="gap-sm"></div>
+
+  <!-- Specimen note -->
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specimen signature of the financier are to be obtained in original application for
+    affixing and attestation by the registering authority with his office seal in Forms 23 and
+    24 in such a manner that the part of impression of seal or stamp and attestation shall fall
+    upon each signature.
+  </p>
+
+  <div class="gap-sm"></div>
+
+  <!-- Specimen signatures -->
+  <div class="specimen-block">
+    <strong>Specimen signatures of Financier</strong><br/>
+    1.&nbsp;<input class="f" type="text" id="f_spec_fin_1" size="34"
+      placeholder="................................." title="Specimen signature of financier 1" /><br/>
+    2.&nbsp;<input class="f" type="text" id="f_spec_fin_2" size="34"
+      placeholder="................................." title="Specimen signature of financier 2" />
+  </div>
+
+</div><!-- /.page -->
+
+<script>
+  function clearForm() {
+    if (!confirm('Clear all filled data?')) return;
+    document.querySelectorAll('input.f').forEach(el => { el.value = ''; });
+    localStorage.removeItem('form35_data');
+  }
+
+  const STORAGE_KEY = 'form35_data';
+
+  function saveData() {
+    const data = {};
+    document.querySelectorAll('input.f[id]').forEach(el => { data[el.id] = el.value; });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function loadData() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      Object.entries(data).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      });
+    } catch(e) {}
+  }
+
+  document.querySelectorAll('input.f').forEach(el => {
+    el.addEventListener('input', saveData);
+  });
+
+  loadData();
+
+  /**
+   * Programmatic API — window.Form35
+   *
+   * Form35.fill({
+   *   f_reg_authority: "RTO Chennai Central",
+   *   f_vehicle_no:    "TN09AB1234",
+   *   f_mobile:        "9876543210",
+   *   f_date_owner:    "01-05-2026",
+   *   f_date_financier:"01-05-2026",
+   *   f_ref_no:        "REF/2026/001",
+   *   f_office_of:     "RTO Chennai Central",
+   *   f_recorded_on:   "05-05-2026",
+   *   f_date_office:   "05-05-2026",
+   *   f_to_financier:  "HDFC Bank Ltd, Anna Salai, Chennai",
+   *   f_to_ra:         "RTO Tambaram"
+   * });
+   *
+   * All field IDs:
+   *   f_reg_authority, f_vehicle_no, f_mobile,
+   *   f_date_owner,    f_sig_owner,
+   *   f_date_financier, f_sig_financier,
+   *   f_ref_no,        f_office_of,    f_recorded_on,
+   *   f_sig_ra_dots,   f_date_office,
+   *   f_to_financier,  f_to_ra,
+   *   f_spec_fin_1,    f_spec_fin_2
+   */
+  window.Form35 = {
+    fill(data) {
+      Object.entries(data).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      });
+      saveData();
+    },
+    getData() {
+      const data = {};
+      document.querySelectorAll('input.f[id]').forEach(el => { data[el.id] = el.value; });
+      return data;
+    },
+    clear() { clearForm(); },
+    print() { window.print(); }
+  };
+</script>
+
+<script src="./prefill.js"></script>
+</body>
+</html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form 30 - Application for Intimation and Transfer of Ownership of Motor Vehicle</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #e0e0e0;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 13pt;
+      color: #000;
+    }
+
+    /* ── A4 Page ── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      margin: 20px auto;
+      padding: 22mm 22mm 20mm 25mm;
+      box-shadow: 0 0 12px rgba(0,0,0,0.25);
+      page-break-after: always;
+    }
+    .page:last-of-type { page-break-after: auto; }
+
+    /* ── Headings ── */
+    .form-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 14pt;
+      margin-bottom: 4px;
+    }
+    .refer-rule {
+      text-align: center;
+      font-style: italic;
+      font-size: 12.5pt;
+      margin-bottom: 5px;
+    }
+    .form-subtitle {
+      text-align: center;
+      font-weight: bold;
+      font-size: 12.5pt;
+      text-transform: uppercase;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+    .part-heading {
+      text-align: center;
+      font-style: italic;
+      font-size: 12.5pt;
+      margin: 10px 0 7px;
+    }
+    .section-heading {
+      text-align: center;
+      font-weight: bold;
+      font-size: 12.5pt;
+      text-transform: uppercase;
+      margin: 14px 0 8px;
+      line-height: 1.4;
+    }
+    .office-heading {
+      text-align: center;
+      font-weight: bold;
+      font-size: 12.5pt;
+      text-transform: uppercase;
+      margin: 14px 0 8px;
+    }
+
+    /* ── Body text ── */
+    p, .body-text {
+      font-size: 12.5pt;
+      line-height: 1.55;
+      text-align: justify;
+    }
+    .intro-note {
+      font-size: 12.5pt;
+      line-height: 1.55;
+      text-align: justify;
+      margin-bottom: 10px;
+    }
+    .line-block {
+      font-size: 12.5pt;
+      line-height: 1.65;
+      margin: 3px 0;
+    }
+    .indent { padding-left: 36px; }
+    .to-label { font-size: 12.5pt; margin-bottom: 3px; }
+
+    /* ── Inline editable fields ── */
+    input.f {
+      border: none;
+      border-bottom: 1px dotted #555;
+      outline: none;
+      background: transparent;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12.5pt;
+      color: #000;
+      vertical-align: bottom;
+      padding: 0 2px;
+    }
+    input.f:focus {
+      border-bottom: 1.5px solid #1a56db;
+      background: #f0f6ff;
+    }
+    input.f.wide { width: 100%; }
+
+    /* ── Signature / date rows ── */
+    .sig-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 8px;
+    }
+    .sig-left  { flex: 0 0 35%; font-size: 12.5pt; line-height: 1.6; }
+    .sig-right { flex: 0 0 58%; font-size: 12.5pt; text-align: center; line-height: 1.6; }
+    .sig-right input.f { width: 92%; }
+
+    /* Two equal halves */
+    .half-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 6px;
+    }
+    .half { flex: 0 0 48%; font-size: 12.5pt; line-height: 1.7; }
+
+    /* Specimen sig columns */
+    .specimen-row {
+      display: flex;
+      gap: 0;
+      margin-top: 6px;
+    }
+    .specimen-col { flex: 0 0 50%; font-size: 12.5pt; line-height: 2.2; }
+    .specimen-col input.f { width: 85%; }
+
+    /* ── Gaps ── */
+    .gap    { margin-top: 8px; }
+    .gap-lg { margin-top: 16px; }
+    .gap-sm { margin-top: 4px; }
+
+    /* ── Italic / footnote text ── */
+    .footnote { font-style: italic; font-size: 12pt; margin: 3px 0; }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      width: 210mm;
+      margin: 0 auto 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .toolbar button {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+    }
+    .btn-print { background: #1a56db; color: #fff; }
+    .btn-clear { background: #e5e7eb; color: #111; }
+    .btn-print:hover { background: #1647bf; }
+    .btn-clear:hover { background: #d1d5db; }
+    .toolbar-info { font-size: 12px; color: #555; font-family: Arial, sans-serif; }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; box-shadow: none; padding: 20mm 22mm 18mm 25mm; }
+      .no-print { display: none; }
+      input.f {
+        border-bottom: 1px dotted #000 !important;
+        background: transparent !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     PAGE 1
+══════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="form-title">FORM 30</div>
+  <div class="refer-rule">[Refer Rule 55(2) and (3)]</div>
+  <div class="form-subtitle">Application for Intimation and Transfer of<br/>Ownership of Motor Vehicle</div>
+
+  <p class="intro-note">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(To be made in duplicate if the vehicle is held under an agreement of hire-purchase/lease/hypothecation.
+    The duplicate copy with the endorsement of the registering authority to be returned to the financier
+    simultaneously on making the entry of the transfer of ownership in the certificate of registration
+    and registration record in Form 24.)
+  </p>
+
+  <div class="to-label">To</div>
+  <div class="indent line-block">The Registering Authority</div>
+  <div class="indent line-block">
+    <input class="f" type="text" id="f_reg_authority" size="46"
+      placeholder="............................................" title="Name / place of Registering Authority" />
+  </div>
+
+  <!-- PART I -->
+  <div class="part-heading"><em>PART I—FOR THE USE OF THE TRANSFEROR</em></div>
+
+  <div class="line-block">
+    Name of the transferor<input class="f" type="text" id="f_transferor_name" size="18"
+      placeholder="................." title="Transferor name" />son/wife/daughter of<input class="f" type="text" id="f_transferor_parent" size="34"
+      placeholder="..................................." title="Transferor's parent/spouse name" />
+  </div>
+
+  <div class="line-block">
+    Full &nbsp;address<input class="f" type="text" id="f_transferor_address" size="80"
+      placeholder="........................................................................................................................................................" title="Transferor full address" style="width:calc(100% - 80px);" />
+  </div>
+
+  <div class="gap-sm"></div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We hereby declare that I/We have on this<input class="f" type="text" id="f_sale_day"
+      size="24" placeholder="............................." title="Day of sale" />day of the
+    year<input class="f" type="text" id="f_sale_year" size="18" placeholder="................." title="Year of sale" />sold
+    my/our motor vehicle bearing registration mark
+    <input class="f" type="text" id="f_reg_mark" size="18" placeholder="................." title="Registration mark/number" />
+    to Sh/Smt<input class="f" type="text" id="f_transferee_name" size="18"
+      placeholder="................." title="Transferee name" />son/wife daughter of
+    <input class="f" type="text" id="f_transferee_parent" size="20"
+      placeholder="..................." title="Transferee's parent/spouse name" />residing at
+    <input class="f" type="text" id="f_transferee_address" size="24"
+      placeholder="......................." title="Transferee's address" />
+    (full address) and handed over the certificate of registration and the certificate of
+    insurance to him/her/them.
+  </p>
+
+  <div class="gap-sm"></div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We hereby declare that to the best of my/our knowledge the certificate of
+    registration of the vehicle has not been suspended* or cancelled.
+  </p>
+
+  <div class="gap-sm"></div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*I/We enclose the "No Objection Certificate" issued by the registering authority.
+  </p>
+
+  <div class="gap-sm"></div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**If the "No objection Certificate" from the registering authority is not enclosed,
+    the transferor should file along with this application a declaration as required under
+    sub-section (1) of section 50.
+  </p>
+
+  <div class="gap"></div>
+
+  <!-- Part I signature row -->
+  <div class="sig-row">
+    <div class="sig-left">
+      Date<input class="f" type="text" id="f_date_transferor" size="16"
+        placeholder="................." title="Date (Transferor)" /><br/>
+      <span class="footnote">* Details of suspension or cancellation.</span><br/>
+      <span class="footnote">** Strike out whichever is inapplicable.</span>
+    </div>
+    <div class="sig-right">
+      <input class="f" type="text" id="f_sig_transferor" size="46"
+        placeholder="............................................" title="Signature/digital signature/e-signature of owner" /><br/>
+      Signature/digital signature/e-signature of owner of<br/>
+      motor vehicle or authorised dealer of registered vehicle
+    </div>
+  </div>
+
+  <div class="gap-lg"></div>
+
+  <!-- PART II -->
+  <div class="part-heading"><em>PART II—FOR THE USE OF TRANSFEREE</em></div>
+
+  <div class="line-block">
+    Name of the transferee
+    <input class="f" type="text" id="f_tee_name" size="22"
+      placeholder="......................." title="Transferee name" />
+    son/wife/daughter of
+    <input class="f" type="text" id="f_tee_parent" size="24"
+      placeholder="......................." title="Transferee's parent/spouse" />
+  </div>
+
+  <div class="line-block">
+    Age
+    <input class="f" type="text" id="f_tee_age" size="10" placeholder="........." title="Age" />
+    Mobile number<input class="f" type="text" id="f_tee_mobile" size="20"
+      placeholder="..................." title="Mobile number" />
+    Full address
+    <input class="f" type="text" id="f_tee_address" size="20"
+      placeholder="................." title="Full address" />
+    (Proof of address to be enclosed).
+  </div>
+
+  <div class="gap-sm"></div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We hereby declare
+    <input class="f" type="text" id="f_nominee_declare" size="34"
+      placeholder="................................." title="Nominee declaration" />
+    as the nominee for this vehicle who
+    is my/our
+    <input class="f" type="text" id="f_nominee_relation" size="38"
+      placeholder="..................................." title="Relationship with nominee" />
+  </p>
+
+  <div class="gap-sm"></div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We, hereby declare that I/we have on this
+    <input class="f" type="text" id="f_purch_day" size="18"
+      placeholder="................." title="Day of purchase" />
+    day of the year
+    <input class="f" type="text" id="f_purch_year" size="12"
+      placeholder="..........." title="Year of purchase" />
+    purchased the motor vehicle bearing registration number
+    <input class="f" type="text" id="f_purch_reg_no" size="14"
+      placeholder="............." title="Registration number" />
+    from
+    <input class="f" type="text" id="f_purch_from" size="16"
+      placeholder="..............." title="Purchased from (name and full address)" />
+    (name and full address) and request that necessary entries regarding the
+    transfer of ownership of the vehicle in my/our name may be recorded in the certificate
+    of registration/certificate of fitness of the vehicle, which is enclosed.
+  </p>
+
+  <div class="gap-sm"></div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The certificate of insurance is also enclosed.&nbsp; To the best of my knowledge and
+    belief I/we have not suppressed any facts and information furnished is true.&nbsp; The vehicle
+    is not superdari and free from all encumbrances I/we undertake to hold myself
+    responsible for any inaccuracy of the information.
+  </p>
+
+  <div class="gap"></div>
+
+  <!-- Part II signature row -->
+  <div class="sig-row">
+    <div class="sig-left">
+      Date<input class="f" type="text" id="f_date_transferee" size="16"
+        placeholder="................." title="Date (Transferee)" />
+    </div>
+    <div class="sig-right">
+      Signature or thumb impression of the transferee<br/>
+      <input class="f" type="text" id="f_sig_transferee" size="46"
+        placeholder="............................................" title="Signature or thumb impression" />
+    </div>
+  </div>
+
+</div><!-- /page 1 -->
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 2
+══════════════════════════════════════════ -->
+<div class="page">
+
+  <!-- Financier Consent heading -->
+  <div class="section-heading">
+    Consent of the Financier in the Case of Motor Vehicle Subject to<br/>
+    an Agreement of Hire-Purchase/Lease/Hypothecation
+  </div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We being a party to an agreement of hire-purchase/lease/hypothecation in
+    respect of motor vehicle specified above, give consent to the transfer of ownership of
+    the said motor vehicle in the name of the transferee named above, with whom I/we
+    have entered into an agreement of hire-purchase/lease/hypothecation.
+  </p>
+
+  <div class="gap"></div>
+
+  <div class="line-block indent">
+    (Full name and address of the financier)
+  </div>
+
+  <div class="gap"></div>
+
+  <div class="line-block indent">
+    <input class="f" type="text" id="f_financier_name_addr" size="70"
+      placeholder="..................................................................."
+      title="Full name and address of the financier" style="width:90%;" />
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- Financier sig row: two dates + one sig -->
+  <div style="display:flex; justify-content:space-between; font-size:12.5pt; margin-top:6px;">
+    <div style="flex:0 0 35%;">
+      Date<input class="f" type="text" id="f_date_financier_left" size="18"
+        placeholder="................." title="Date (Financier left)" />
+    </div>
+    <div style="flex:0 0 55%; text-align:right; line-height:1.7;">
+      Signature of the financier<br/>
+      <input class="f" type="text" id="f_sig_financier" size="40"
+        placeholder="........................................." title="Financier signature" />
+    </div>
+  </div>
+  <div style="text-align:right; font-size:12.5pt; margin-top:4px;">
+    Date<input class="f" type="text" id="f_date_financier_right" size="18"
+      placeholder="................." title="Date (Financier right)" />
+  </div>
+
+  <div class="gap-lg"></div>
+
+  <!-- Office Endorsement -->
+  <div class="office-heading">Office Endorsement</div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ref. No<input class="f" type="text" id="f_ref_no" size="18"
+      placeholder="................." title="Reference Number" />Office of the<input class="f" type="text" id="f_office_of" size="18"
+      placeholder="................." title="Office name/place" />
+    The transfer of ownership of vehicle under continuation of an endorsement of hire-purchase/lease/hypothecation
+    agreement has been recorded with effect from<input class="f" type="text" id="f_effect_from" size="18"
+      placeholder="................." title="Effective date" />in the registration certificate
+    of the vehicle<input class="f" type="text" id="f_vehicle_reg" size="22"
+      placeholder="..................." title="Vehicle registration number" />and in the registration record of this office in Form 24.
+  </p>
+
+  <div class="gap"></div>
+
+  <div class="sig-row">
+    <div class="sig-left">
+      Date<input class="f" type="text" id="f_date_office" size="14"
+        placeholder="............." title="Office date" />
+    </div>
+    <div class="sig-right">
+      Signature of the registering authority<br/>
+      <input class="f" type="text" id="f_sig_ra" size="44"
+        placeholder="........................................" title="Registering authority signature" />
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- To block -->
+  <div class="to-label">To</div>
+  <div class="indent line-block">
+    The owner of motor vehicle/authorised dealer of registered vehicle<input class="f" type="text"
+      id="f_to_owner" size="26" placeholder="........................." title="Owner/dealer address" />
+  </div>
+  <div class="indent line-block">
+    The Financier
+    <input class="f" type="text" id="f_to_financier" size="60"
+      placeholder="................................................................" title="Financier address" />
+  </div>
+  <div class="line-block">
+    (To be sent to both the above parties by registered post acknowledgement due)
+  </div>
+
+  <div class="gap-lg"></div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specimen signature or thumb impression of the registered owner and the financier
+    are to be obtained in the original application for affixing and attestation by the
+    registering authority with the office seal in Forms 23 and 24, in such manner that the
+    parts of impression of seal or stamp and attestation shall fall upon each signature.
+  </p>
+
+  <div class="gap"></div>
+
+  <!-- Specimen signatures table -->
+  <div class="specimen-row">
+    <div class="specimen-col">
+      <strong>Specimen signatures of financier</strong><br/>
+      1.&nbsp;<input class="f" type="text" id="f_spec_fin_1" size="28"
+        placeholder="........................." title="Specimen signature of financier 1" /><br/>
+      2.&nbsp;<input class="f" type="text" id="f_spec_fin_2" size="28"
+        placeholder="........................." title="Specimen signature of financier 2" />
+    </div>
+    <div class="specimen-col">
+      <strong>Specimen signatures of registered owner</strong><br/>
+      1.&nbsp;<input class="f" type="text" id="f_spec_owner_1" size="28"
+        placeholder="........................." title="Specimen signature of registered owner 1" /><br/>
+      2.&nbsp;<input class="f" type="text" id="f_spec_owner_2" size="28"
+        placeholder="........................." title="Specimen signature of registered owner 2" />
+    </div>
+  </div>
+
+</div><!-- /page 2 -->
+
+<script>
+  // ── Clear all fields ──
+  function clearForm() {
+    if (!confirm('Clear all filled data?')) return;
+    document.querySelectorAll('input.f').forEach(el => { el.value = ''; });
+    localStorage.removeItem('form30_data');
+  }
+
+  // ── Auto-save / restore ──
+  const STORAGE_KEY = 'form30_data';
+
+  function saveData() {
+    const data = {};
+    document.querySelectorAll('input.f[id]').forEach(el => { data[el.id] = el.value; });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function loadData() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      Object.entries(data).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      });
+    } catch(e) {}
+  }
+
+  document.querySelectorAll('input.f').forEach(el => {
+    el.addEventListener('input', saveData);
+  });
+
+  loadData();
+
+  // ── Programmatic API ──
+  window.Form30 = {
+    /**
+     * Fill the form programmatically.
+     * Example:
+     *   Form30.fill({
+     *     f_transferor_name:    "Rajesh Kumar",
+     *     f_transferor_address: "No.5 Anna Nagar, Chennai - 600040",
+     *     f_reg_mark:           "TN09AB1234",
+     *     f_sale_day:           "15th",
+     *     f_sale_year:          "2025",
+     *     f_transferee_name:    "Suresh Babu",
+     *     f_tee_mobile:         "9876543210",
+     *     f_date_transferor:    "15-01-2025"
+     *   });
+     *
+     * All field IDs — Page 1:
+     *   f_reg_authority, f_transferor_name, f_transferor_parent, f_transferor_address,
+     *   f_sale_day, f_sale_year, f_reg_mark, f_transferee_name, f_transferee_parent,
+     *   f_transferee_address, f_date_transferor, f_sig_transferor,
+     *   f_tee_name, f_tee_parent, f_tee_age, f_tee_mobile, f_tee_address,
+     *   f_nominee_declare, f_nominee_relation,
+     *   f_purch_day, f_purch_year, f_purch_reg_no, f_purch_from,
+     *   f_date_transferee, f_sig_transferee
+     *
+     * All field IDs — Page 2:
+     *   f_financier_name_addr, f_date_financier_left, f_sig_financier, f_date_financier_right,
+     *   f_ref_no, f_office_of, f_effect_from, f_vehicle_reg,
+     *   f_date_office, f_sig_ra, f_to_owner, f_to_financier,
+     *   f_spec_fin_1, f_spec_fin_2, f_spec_owner_1, f_spec_owner_2
+     */
+    fill(data) {
+      Object.entries(data).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      });
+      saveData();
+    },
+
+    /** Get all current field values as an object */
+    getData() {
+      const data = {};
+      document.querySelectorAll('input.f[id]').forEach(el => { data[el.id] = el.value; });
+      return data;
+    },
+
+    clear() { clearForm(); },
+    print() { window.print(); }
+  };
+</script>
+
+<script src="./prefill.js"></script>
+</body>
+</html>

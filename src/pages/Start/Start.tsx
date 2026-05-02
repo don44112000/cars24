@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Tag, ArrowRight } from 'lucide-react';
+import { ShoppingCart, Tag, ArrowRight, Shield, Check } from 'lucide-react';
 import type { UserRole, ScenarioFlags } from '../../types/checklist';
 import { useChecklistStore } from '../../store/checklistStore';
 import styles from './Start.module.css';
@@ -35,30 +35,55 @@ export default function Start() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
+        <div className={styles.heroBadge}>
+          <Shield size={14} />
+          Personalised Checklist
+        </div>
         <h1 className={styles.title}>Start Your Check</h1>
         <p className={styles.subtitle}>Tell us about your situation to get a personalised checklist</p>
 
-        {/* Role Toggle */}
+        {/* Role Selection */}
+        <div className={styles.roleLabel}>I am a…</div>
         <div className={styles.roleToggle}>
           <button
             className={`${styles.roleOption} ${role === 'buyer' ? styles.roleOptionActive : ''}`}
             onClick={() => setRole('buyer')}
             type="button"
+            aria-pressed={role === 'buyer'}
           >
-            <div className={styles.roleOptionIcon} style={{ background: 'var(--color-primary-light)', color: 'var(--color-primary)' }}>
-              <ShoppingCart size={24} />
+            <div className={`${styles.roleOptionIcon} ${styles.roleOptionIconBuyer}`}>
+              <ShoppingCart size={22} />
             </div>
-            <div className={styles.roleOptionLabel}>Buyer</div>
+            <div className={styles.roleOptionBody}>
+              <div className={styles.roleOptionLabel}>Buyer</div>
+              <div className={styles.roleOptionDesc}>
+                Verify the vehicle, check documents &amp; complete RC transfer to your name.
+              </div>
+              <div className={styles.roleOptionCount}>21 checkpoints</div>
+            </div>
+            {role === 'buyer' && (
+              <div className={styles.roleOptionCheck}><Check size={14} /></div>
+            )}
           </button>
           <button
             className={`${styles.roleOption} ${role === 'seller' ? styles.roleOptionActive : ''}`}
             onClick={() => setRole('seller')}
             type="button"
+            aria-pressed={role === 'seller'}
           >
-            <div className={styles.roleOptionIcon} style={{ background: 'var(--color-cta-light)', color: 'var(--color-cta)' }}>
-              <Tag size={24} />
+            <div className={`${styles.roleOptionIcon} ${styles.roleOptionIconSeller}`}>
+              <Tag size={22} />
             </div>
-            <div className={styles.roleOptionLabel}>Seller</div>
+            <div className={styles.roleOptionBody}>
+              <div className={styles.roleOptionLabel}>Seller</div>
+              <div className={styles.roleOptionDesc}>
+                Clear dues, prepare documents &amp; protect yourself from post-sale liability.
+              </div>
+              <div className={styles.roleOptionCount}>14 checkpoints</div>
+            </div>
+            {role === 'seller' && (
+              <div className={styles.roleOptionCheck}><Check size={14} /></div>
+            )}
           </button>
         </div>
 

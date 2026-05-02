@@ -17,6 +17,14 @@ export default function Header() {
 
         <nav className={styles.nav}>
           <NavLink
+            to="/forms"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ''}`
+            }
+          >
+            Generate Forms
+          </NavLink>
+          <NavLink
             to="/documents"
             className={({ isActive }) =>
               `${styles.navLink} ${isActive ? styles.active : ''}`

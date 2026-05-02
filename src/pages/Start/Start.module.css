@@ -12,8 +12,28 @@
   box-shadow: var(--shadow-lg);
   padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
   width: 100%;
-  max-width: 540px;
+  max-width: 580px;
   margin: 0 var(--space-lg);
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--fw-bold);
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 auto var(--space-sm);
+}
+
+.card .heroBadge {
+  display: flex;
+  width: fit-content;
 }
 
 .title {
@@ -28,10 +48,19 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   text-align: center;
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-xl);
 }
 
-/* ── Role Toggle ── */
+/* ── Role Selection ── */
+.roleLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-sm);
+}
+
 .roleToggle {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -40,39 +69,101 @@
 }
 
 .roleOption {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
   padding: var(--space-lg);
-  border: 2px solid var(--color-border-light);
+  border: 1.5px solid var(--color-border-light);
   border-radius: var(--radius-lg);
-  text-align: center;
+  text-align: left;
   cursor: pointer;
   transition: all var(--transition-normal);
   background: var(--color-surface);
 }
 
 .roleOption:hover {
-  border-color: var(--color-border);
-  box-shadow: var(--shadow-sm);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .roleOptionActive {
   border-color: var(--color-primary);
   background: var(--color-primary-50);
-  box-shadow: 0 0 0 3px rgba(0, 87, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 87, 255, 0.12);
 }
 
 .roleOptionIcon {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto var(--space-sm);
+  flex-shrink: 0;
+}
+
+.roleOptionIconBuyer {
+  background: linear-gradient(135deg, #E8F0FE, #BBDEFB);
+  color: var(--color-primary);
+}
+
+.roleOptionIconSeller {
+  background: linear-gradient(135deg, #FFF3E0, #FFCC80);
+  color: var(--color-cta);
+}
+
+.roleOptionBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
 }
 
 .roleOptionLabel {
   font-size: var(--font-size-base);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+}
+
+.roleOptionDesc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.roleOptionCount {
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  width: fit-content;
+}
+
+.roleOptionActive .roleOptionCount {
+  background: var(--color-primary);
+  color: white;
+}
+
+.roleOptionCheck {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ── Vehicle Input ── */
@@ -234,5 +325,8 @@
 @media (max-width: 480px) {
   .card {
     padding: var(--space-xl) var(--space-lg);
+  }
+  .roleToggle {
+    grid-template-columns: 1fr;
   }
 }

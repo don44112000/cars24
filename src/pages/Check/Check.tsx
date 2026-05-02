@@ -204,6 +204,7 @@ function FocusCard({
   total,
   onStatus,
   onNote,
+  onSkip,
 }: {
   item: ChecklistItem;
   status: ItemStatus;
@@ -213,6 +214,7 @@ function FocusCard({
   total: number;
   onStatus: (s: ItemStatus) => void;
   onNote: (n: string) => void;
+  onSkip: () => void;
 }) {
   const [showNote, setShowNote] = useState(!!note);
 
@@ -289,13 +291,40 @@ function FocusCard({
             transition={{ duration: 0.22 }}
           >
             <div className={styles.fixTitle}>
-              <Wrench size={14} /> How to Fix
+              <Wrench size={14} /> How to Fix — Next Steps
             </div>
             <ol className={styles.fixSteps}>
               {item.fixSteps.map((step, i) => (
                 <li key={i}>{step}</li>
               ))}
             </ol>
+            <div className={styles.fixActions}>
+              <button
+                type="button"
+                className={styles.fixActionPrimary}
+                onClick={() => onStatus('fixed')}
+              >
+                <Check size={14} strokeWidth={2.5} /> Mark as Fixed
+              </button>
+              <button
+                type="button"
+                className={styles.fixActionSecondary}
+                onClick={onSkip}
+              >
+                Skip &amp; Continue <ArrowRight size={14} />
+              </button>
+            </div>
+          </motion.div>
+        )}
+        {status === 'fixed' && (
+          <motion.div
+            className={styles.focusFixedConfirm}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.22 }}
+          >
+            <Check size={14} strokeWidth={2.5} /> Marked as fixed — counted toward your readiness score.
           </motion.div>
         )}
       </AnimatePresence>
@@ -417,16 +446,19 @@ export default function CheckPage() {
     return -1;
   };
 
+  const advanceToNextPending = () => {
+    const next = findNextPending(currentIdx);
+    if (next !== -1 && next !== currentIdx) setCurrentIdx(next);
+  };
+
   const handleFocusStatus = (s: ItemStatus) => {
     if (!currentItem) return;
     const wasPending = getStatus(currentItem.id) === 'pending';
     updateItemStatus(currentItem.id, s);
-    // Auto-advance only on Yes / N/A from a pending state. Stay on No so user reads fix.
-    if (wasPending && (s === 'yes' || s === 'na')) {
-      window.setTimeout(() => {
-        const next = findNextPending(currentIdx);
-        if (next !== -1 && next !== currentIdx) setCurrentIdx(next);
-      }, 280);
+    // Auto-advance on Yes / N/A from pending, or when transitioning to 'fixed'.
+    // Stay on 'no' so the user can read the fix and choose Mark Fixed / Skip.
+    if ((wasPending && (s === 'yes' || s === 'na')) || s === 'fixed') {
+      window.setTimeout(advanceToNextPending, 280);
     }
   };
 
@@ -566,6 +598,7 @@ export default function CheckPage() {
                   total={flatItems.length}
                   onStatus={handleFocusStatus}
                   onNote={(n) => updateNote(currentItem.id, n)}
+                  onSkip={advanceToNextPending}
                 />
               ) : null}
             </AnimatePresence>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form 28 - Application for and Grant of No Objection Certificate</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #e0e0e0;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 13pt;
+      color: #000;
+    }
+
+    /* ── A4 Page ── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      margin: 20px auto;
+      padding: 22mm 22mm 20mm 25mm;
+      box-shadow: 0 0 12px rgba(0,0,0,0.25);
+      page-break-after: always;
+    }
+    .page:last-of-type { page-break-after: auto; }
+
+    /* ── Headings ── */
+    .form-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 14pt;
+      margin-bottom: 4px;
+    }
+    .refer-rule {
+      text-align: center;
+      font-style: italic;
+      font-size: 12.5pt;
+      margin-bottom: 6px;
+    }
+    .form-subtitle {
+      text-align: center;
+      font-weight: bold;
+      font-size: 12.5pt;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .part-heading {
+      text-align: center;
+      font-style: italic;
+      font-size: 12.5pt;
+      margin: 12px 0 8px;
+    }
+    .part-heading-bold {
+      text-align: center;
+      font-style: italic;
+      font-weight: bold;
+      font-size: 12.5pt;
+      text-transform: uppercase;
+      margin: 14px 0 6px;
+    }
+    .part-sub-heading {
+      text-align: center;
+      font-style: italic;
+      font-size: 12pt;
+      margin-bottom: 8px;
+    }
+
+    /* ── Body text ── */
+    p, .body-text {
+      font-size: 12.5pt;
+      line-height: 1.55;
+      text-align: justify;
+    }
+    .intro-note {
+      font-size: 12.5pt;
+      line-height: 1.55;
+      text-align: justify;
+      margin-bottom: 10px;
+    }
+    .line-block {
+      font-size: 12.5pt;
+      line-height: 1.6;
+      margin: 4px 0;
+    }
+    .indent { padding-left: 36px; }
+    .to-label { font-size: 12.5pt; margin-bottom: 4px; }
+
+    /* ── Inline editable fields ── */
+    input.f {
+      border: none;
+      border-bottom: 1px dotted #555;
+      outline: none;
+      background: transparent;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12.5pt;
+      color: #000;
+      vertical-align: bottom;
+      padding: 0 2px;
+    }
+    input.f:focus {
+      border-bottom: 1.5px solid #1a56db;
+      background: #f0f6ff;
+    }
+    textarea.f {
+      border: none;
+      border-bottom: 1px dotted #555;
+      outline: none;
+      background: transparent;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12.5pt;
+      color: #000;
+      resize: none;
+      vertical-align: bottom;
+      padding: 0 2px;
+      line-height: 1.5;
+    }
+    textarea.f:focus {
+      border-bottom: 1.5px solid #1a56db;
+      background: #f0f6ff;
+    }
+
+    /* ── Numbered list items (two-column: label left, field right) ── */
+    .field-list {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 6px 0;
+    }
+    .field-list td {
+      font-size: 12.5pt;
+      vertical-align: top;
+      padding: 3px 0;
+    }
+    .field-list td.num {
+      width: 28px;
+      vertical-align: top;
+      padding-top: 4px;
+    }
+    .field-list td.label {
+      width: 68%;
+      vertical-align: top;
+      padding-top: 4px;
+      line-height: 1.45;
+    }
+    .field-list td.val {
+      text-align: right;
+      vertical-align: bottom;
+      width: 30%;
+    }
+    .field-list td.val input.f {
+      width: 100%;
+      text-align: left;
+    }
+
+    /* ── Dotted separator line ── */
+    .dot-line {
+      border: none;
+      border-top: 1px dotted #555;
+      margin: 10px 0;
+    }
+    .dot-line-dbl {
+      display: block;
+      border-bottom: 1px dotted #555;
+      min-height: 18px;
+      margin: 4px 0;
+    }
+
+    /* ── Signature rows ── */
+    .sig-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 8px;
+    }
+    .sig-left { flex: 0 0 30%; font-size: 12.5pt; }
+    .sig-right { flex: 0 0 60%; font-size: 12.5pt; text-align: center; }
+    .sig-right input.f { width: 90%; }
+
+    /* ── Gaps ── */
+    .gap { margin-top: 8px; }
+    .gap-lg { margin-top: 16px; }
+
+    /* ── Italic strike note ── */
+    .strike-note { font-style: italic; font-size: 12pt; margin-top: 10px; }
+
+    /* ── Final address block ── */
+    .addr-block { margin-top: 10px; font-size: 12.5pt; }
+    .addr-block .indent { margin: 3px 0; }
+
+    /* ── Toolbar (screen only) ── */
+    .toolbar {
+      width: 210mm;
+      margin: 0 auto 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .toolbar button {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+    }
+    .btn-print { background: #1a56db; color: #fff; }
+    .btn-clear { background: #e5e7eb; color: #111; }
+    .btn-print:hover { background: #1647bf; }
+    .btn-clear:hover { background: #d1d5db; }
+    .toolbar-info { font-size: 12px; color: #555; font-family: Arial, sans-serif; }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; box-shadow: none; padding: 20mm 22mm 18mm 25mm; }
+      .no-print { display: none; }
+      input.f, textarea.f {
+        border-bottom: 1px dotted #000 !important;
+        background: transparent !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     PAGE 1
+══════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="form-title">FORM 28</div>
+  <div class="refer-rule">[Refer Rules 54, 58(1), (3) and (4)]</div>
+  <div class="form-subtitle">Application for and Grant of No Objection Certificate</div>
+
+  <p class="intro-note">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(To be made in quadruplicate if the vehicle is held under an agreement of
+    hire-purchase/lease/hypothecation, in duplicate copy, the triplicate copy and the quadruplicate
+    copy with the endorsement of the registering authority to be returned to the registered owner of
+    the vehicle, the registering authority in whose jurisdiction the vehicle is to be removed and the
+    financier simultaneously on grant/refusal of a "No Objection Certificate".)
+  </p>
+
+  <div class="part-heading"><em>PART I—APPLICATION</em></div>
+
+  <div class="to-label">To</div>
+  <div class="indent line-block">The Registering Authority,</div>
+  <div class="indent line-block">
+    <input class="f" type="text" id="f_reg_authority" size="45"
+      placeholder="............................................" title="Name / place of Registering Authority" />
+  </div>
+
+  <div class="gap"></div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We intend to transfer the vehicle to the jurisdiction of the registering authority
+  </p>
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We intend to sell the vehicle to Shri/Smt./Kumari
+    <input class="f" type="text" id="f_buyer_name" size="38"
+      placeholder="....................................." title="Name of buyer" />
+    who resides in the jurisdiction of the registering authority
+    <input class="f" type="text" id="f_buyer_jurisdiction" size="32"
+      placeholder="............................." title="Registering authority jurisdiction of buyer" />
+    of the State
+    <input class="f" type="text" id="f_buyer_state" size="22"
+      placeholder="...................." title="State of buyer" />
+    I/We, therefore, request for the issue of a "No Objection Certificate" for my/our vehicle,
+    the particulars of which are furnished below:—
+  </p>
+
+  <div class="gap"></div>
+
+  <!-- Numbered fields table -->
+  <table class="field-list">
+    <tr>
+      <td class="num">1.</td>
+      <td class="label">Name and address</td>
+      <td class="val"><input class="f" type="text" id="f_name_address" size="26" placeholder="........................." title="Name and address of owner" /></td>
+    </tr>
+    <tr>
+      <td class="num">2.</td>
+      <td class="label">Son/wife/daughter of</td>
+      <td class="val"><input class="f" type="text" id="f_son_of" size="26" placeholder="........................." title="Son/wife/daughter of" /></td>
+    </tr>
+    <tr>
+      <td class="num">2a.</td>
+      <td class="label">Mobile number of the owner of the vehicle</td>
+      <td class="val"><input class="f" type="text" id="f_mobile" size="26" placeholder="........................." title="Mobile number" /></td>
+    </tr>
+    <tr>
+      <td class="num">3.</td>
+      <td class="label">Registration number of the vehicle</td>
+      <td class="val"><input class="f" type="text" id="f_reg_no" size="26" placeholder="........................." title="Registration number" /></td>
+    </tr>
+    <tr>
+      <td class="num">4.</td>
+      <td class="label">Class of vehicle</td>
+      <td class="val"><input class="f" type="text" id="f_class" size="26" placeholder="........................." title="Class of vehicle" /></td>
+    </tr>
+    <tr>
+      <td class="num">5.</td>
+      <td class="label">Registering authority which originally registered the vehicle</td>
+      <td class="val"><input class="f" type="text" id="f_orig_ra" size="26" placeholder="........................." title="Original registering authority" /></td>
+    </tr>
+    <tr>
+      <td class="num">6.</td>
+      <td class="label">Engine number or motor number in the case of Battery Operated Vehicles</td>
+      <td class="val"><input class="f" type="text" id="f_engine_no" size="26" placeholder="........................." title="Engine / motor number" /></td>
+    </tr>
+    <tr>
+      <td class="num">7.</td>
+      <td class="label">Chassis number (affix also pencil print)</td>
+      <td class="val"><input class="f" type="text" id="f_chassis_no" size="26" placeholder="........................." title="Chassis number" /></td>
+    </tr>
+    <tr>
+      <td class="num">8.</td>
+      <td class="label">Period of stay in the State</td>
+      <td class="val"><input class="f" type="text" id="f_period_stay" size="26" placeholder="........................." title="Period of stay in State" /></td>
+    </tr>
+    <tr>
+      <td class="num">9.</td>
+      <td class="label">Period up to which motor vehicle tax has been paid</td>
+      <td class="val"><input class="f" type="text" id="f_tax_paid_upto" size="26" placeholder="........................." title="Tax paid up to period" /></td>
+    </tr>
+    <tr>
+      <td class="num">10.</td>
+      <td class="label">Whether any demand for tax is pending, if so, give details</td>
+      <td class="val"><input class="f" type="text" id="f_tax_pending" size="26" placeholder="........................." title="Tax demand pending details" /></td>
+    </tr>
+    <tr>
+      <td class="num">11.</td>
+      <td class="label">Whether the vehicle is involved in any theft cases,<br/>if so, give details</td>
+      <td class="val"><input class="f" type="text" id="f_theft_cases" size="26" placeholder="........................." title="Theft case details" /></td>
+    </tr>
+    <tr>
+      <td class="num">12.</td>
+      <td class="label">Whether any action under section 53, 54 or 58 of the
+        "Motor Vehicles Act, 1988 is pending before any registering authority or other prescribed authority,
+        if so, give details.</td>
+      <td class="val"><input class="f" type="text" id="f_sec_action" size="26" placeholder="........................." title="Action under sec 53/54/58 details" /></td>
+    </tr>
+    <tr>
+      <td class="num">13.</td>
+      <td class="label">Whether the vehicle is involved in any case of transport of prohibited goods, if so, give details</td>
+      <td class="val"><input class="f" type="text" id="f_prohibited_goods" size="26" placeholder="........................." title="Prohibited goods case details" /></td>
+    </tr>
+    <tr>
+      <td class="num">14.</td>
+      <td class="label">Whether the vehicle is held under an agreement of hire-purchase/lease/hypothecation, if so, give full name and address of the financier</td>
+      <td class="val"><input class="f" type="text" id="f_financier" size="26" placeholder="........................." title="Financier name and address" /></td>
+    </tr>
+  </table>
+
+  <div class="gap"></div>
+  <p class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We solemnly declare that the above statement is true.</p>
+  <div class="gap"></div>
+
+  <!-- Signature row -->
+  <div class="sig-row">
+    <div class="sig-left">
+      Date<input class="f" type="text" id="f_date_p1" size="14"
+        placeholder="............." title="Date" />
+    </div>
+    <div class="sig-right">
+      <input class="f" type="text" id="f_sig_owner" size="48"
+        placeholder="................................................" title="Signature / digital signature / e-signature" /><br/>
+      Signature/digital signature/e-signature<br/>
+      of owner of motor vehicle or authorised<br/>
+      dealer of registered vehicles
+    </div>
+  </div>
+
+</div><!-- /page 1 -->
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 2
+══════════════════════════════════════════ -->
+<div class="page">
+
+  <!-- PART II -->
+  <div class="part-heading-bold">PART II—CONSENT OF THE FINANCIERS IN THE CASE OF MOTOR<br/>VEHICLE SUBJECT TO AN AGREEMENT</div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We being a party to an agreement of the hire-purchase/lease/hypothecation in
+    respect of the above said vehicle hereby:
+  </p>
+
+  <div class="gap"></div>
+
+  <div class="indent line-block">
+    1.&nbsp;&nbsp; Give consent to issue the "No Objection Certificate" for the said vehicle only
+    for the purpose referred above.
+  </div>
+  <div class="gap"></div>
+  <div class="indent line-block">
+    2.&nbsp;&nbsp; Refuse to give consent for issue of "No Objection Certificate" for the said
+    vehicle due to the reasons furnished hereunder :
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- Reason field -->
+  <div style="font-size:12.5pt;">
+    <input class="f" type="text" id="f_refusal_reason" size="95"
+      placeholder="............................................................................................................................................................................................................................................"
+      title="Reason for refusal (if any)" style="width:100%;" />
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- Date + Financier sig -->
+  <div class="sig-row">
+    <div class="sig-left">
+      Date<input class="f" type="text" id="f_date_financier" size="16"
+        placeholder="................." title="Date (Financier)" />
+    </div>
+    <div class="sig-right">
+      Signature of the financier<br/>
+      <input class="f" type="text" id="f_sig_financier" size="42"
+        placeholder="........................................" title="Financier signature" />
+    </div>
+  </div>
+
+  <div class="gap-lg"></div>
+
+  <!-- PART III -->
+  <div class="part-heading-bold">PART III—OFFICE ENDORSEMENT</div>
+  <div class="part-sub-heading">
+    <em>Grant/refusal of "No Objection Certificate" under section 48(3) of<br/>
+    Motor Vehicles Act, 1988</em>
+  </div>
+
+  <div class="gap"></div>
+
+  <div class="indent line-block">
+    (1)&nbsp; No Objection Certificate in respect of the vehicle, the detailed particulars whereof
+    are recorded over above is hereby granted under section 48(3) of the Act, (valid for use at
+    the registering authority, on whom it is issued).
+  </div>
+
+  <div class="gap"></div>
+
+  <div class="indent line-block">
+    (2)&nbsp; No objection certificate in respect of the motor vehicle, the detailed particulars
+    whereof recorded over above is hereby refused under section 48(3) of the Motor Vehicles
+    Act, 1988, for the reasons recorded as under
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- Refusal reason (office) -->
+  <div style="font-size:12.5pt;">
+    <input class="f" type="text" id="f_office_refusal_reason" size="95"
+      placeholder="............................................................................................................................................................................................................................................"
+      title="Office refusal reason" style="width:100%;" />
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- Date + RA signature -->
+  <div class="sig-row">
+    <div class="sig-left">
+      Date<input class="f" type="text" id="f_date_office" size="20"
+        placeholder="..................." title="Date (Office)" />
+    </div>
+    <div class="sig-right">
+      Signature with seal of registering authority<br/>
+      Address<input class="f" type="text" id="f_ra_address" size="46"
+        placeholder=".................................................." title="Address of registering authority" />
+    </div>
+  </div>
+
+  <div class="gap-lg"></div>
+
+  <div class="strike-note">* <em>Strike out whichever is in applicable.</em></div>
+
+  <div class="gap-lg"></div>
+
+  <!-- Final TO block -->
+  <div class="addr-block">
+    <div class="to-label">To</div>
+    <div class="indent line-block">
+      The owner of motor vehicle / authorised dealer of registered vehicles
+      <input class="f" type="text" id="f_to_owner" size="26"
+        placeholder="........................." title="Owner / dealer address" />
+    </div>
+    <div class="indent line-block">
+      The Financier
+      <input class="f" type="text" id="f_to_financier" size="40"
+        placeholder="........................................." title="Financier address" />
+    </div>
+    <div class="indent line-block">
+      The Registering Authority
+      <input class="f" type="text" id="f_to_ra" size="22"
+        placeholder="...................." title="Registering Authority address" />
+    </div>
+    <div class="indent line-block">
+      (To be sent to the parties by Regd. post acknowledgement due)
+    </div>
+  </div>
+
+</div><!-- /page 2 -->
+
+<script>
+  // ── Clear all fields ──
+  function clearForm() {
+    if (!confirm('Clear all filled data?')) return;
+    document.querySelectorAll('input.f, textarea.f').forEach(el => { el.value = ''; });
+    localStorage.removeItem('form28_data');
+  }
+
+  // ── Auto-save / restore ──
+  const STORAGE_KEY = 'form28_data';
+
+  function saveData() {
+    const data = {};
+    document.querySelectorAll('input.f[id], textarea.f[id]').forEach(el => { data[el.id] = el.value; });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function loadData() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      Object.entries(data).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      });
+    } catch(e) {}
+  }
+
+  document.querySelectorAll('input.f, textarea.f').forEach(el => {
+    el.addEventListener('input', saveData);
+  });
+
+  loadData();
+
+  // ── Programmatic API ──
+  window.Form28 = {
+    /**
+     * Fill the form programmatically.
+     * Example:
+     *   Form28.fill({
+     *     f_name_address:   "Rajesh Kumar, No.5 Anna Nagar, Chennai",
+     *     f_reg_no:         "TN09AB1234",
+     *     f_chassis_no:     "MA3EWDE1S00123456",
+     *     f_engine_no:      "K10B1234567",
+     *     f_class:          "Motor Car",
+     *     f_mobile:         "9876543210",
+     *     f_buyer_name:     "Suresh Babu",
+     *     f_buyer_state:    "Tamil Nadu",
+     *     f_date_p1:        "01-01-2025"
+     *   });
+     *
+     * All field IDs:
+     *   Page 1: f_reg_authority, f_buyer_name, f_buyer_jurisdiction, f_buyer_state,
+     *            f_name_address, f_son_of, f_mobile, f_reg_no, f_class, f_orig_ra,
+     *            f_engine_no, f_chassis_no, f_period_stay, f_tax_paid_upto,
+     *            f_tax_pending, f_theft_cases, f_sec_action, f_prohibited_goods,
+     *            f_financier, f_date_p1, f_sig_owner
+     *   Page 2: f_refusal_reason, f_date_financier, f_sig_financier,
+     *            f_office_refusal_reason, f_date_office, f_ra_address,
+     *            f_to_owner, f_to_financier, f_to_ra
+     */
+    fill(data) {
+      Object.entries(data).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      });
+      saveData();
+    },
+
+    /** Get all current field values */
+    getData() {
+      const data = {};
+      document.querySelectorAll('input.f[id], textarea.f[id]').forEach(el => { data[el.id] = el.value; });
+      return data;
+    },
+
+    clear() { clearForm(); },
+    print() { window.print(); }
+  };
+</script>
+
+<script src="./prefill.js"></script>
+</body>
+</html>

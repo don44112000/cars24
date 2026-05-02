@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  ArrowLeft, RotateCcw, Printer, IndianRupee,
+  ArrowLeft, ArrowRight, RotateCcw, Printer, IndianRupee,
   Clock, FileText, AlertTriangle, CheckCircle2,
-  XCircle, MinusCircle, CircleDot,
+  XCircle, MinusCircle, CircleDot, Sparkles, Wand2, Wrench,
 } from 'lucide-react';
 import { useChecklist } from '../../hooks/useChecklist';
 import { useChecklistStore } from '../../store/checklistStore';
@@ -442,20 +442,45 @@ export default function Results() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 + i * 0.04 }}
                 >
-                  <span className={styles.actionItemId}>{item.id}</span>
-                  <div className={styles.actionItemBody}>
+                  <div className={styles.actionItemHeader}>
+                    <span className={styles.actionItemId}>{item.id}</span>
                     <div className={styles.actionItemTitle}>{item.title}</div>
-                    <div className={styles.actionItemFix}>{item.fixSteps[0]}</div>
+                    <span
+                      className={styles.actionItemSeverity}
+                      style={{
+                        background: item.severity === 'critical' ? 'var(--color-critical-bg)' : 'var(--color-important-bg)',
+                        color: item.severity === 'critical' ? 'var(--color-critical)' : '#E65100',
+                      }}
+                    >
+                      {item.severity}
+                    </span>
                   </div>
-                  <span
-                    className={styles.actionItemSeverity}
-                    style={{
-                      background: item.severity === 'critical' ? 'var(--color-critical-bg)' : 'var(--color-important-bg)',
-                      color: item.severity === 'critical' ? 'var(--color-critical)' : '#E65100',
-                    }}
-                  >
-                    {item.severity}
-                  </span>
+
+                  {item.description && (
+                    <p className={styles.actionItemDesc}>{item.description}</p>
+                  )}
+
+                  {item.fields && item.fields.length > 0 && (
+                    <div className={styles.actionItemFields}>
+                      <div className={styles.actionItemFieldsLabel}>What to verify</div>
+                      <ul>
+                        {item.fields.map((f, fi) => (
+                          <li key={fi}>{f}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className={styles.actionItemFixBlock}>
+                    <div className={styles.actionItemFixTitle}>
+                      <Wrench size={12} /> Next steps to resolve
+                    </div>
+                    <ol className={styles.actionItemFixSteps}>
+                      {item.fixSteps.map((step, si) => (
+                        <li key={si}>{step}</li>
+                      ))}
+                    </ol>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -514,6 +539,41 @@ export default function Results() {
                 </div>
               ))}
             </div>
+          </div>
+        </motion.div>
+
+        {/* ── Smart Forms Nudge ── */}
+        <motion.div
+          className={styles.formsNudge}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55 }}
+        >
+          <div className={styles.formsNudgeLeft}>
+            <div className={styles.formsNudgeBadge}>
+              <Sparkles size={14} /> AI-Assisted
+            </div>
+            <h2 className={styles.formsNudgeTitle}>Skip the paperwork — generate your RTO forms now</h2>
+            <p className={styles.formsNudgeDesc}>
+              Based on your situation, you'll need {(() => {
+                const forms: string[] = [];
+                if (role === 'buyer') {
+                  forms.push('Form 29', 'Form 30');
+                  if (!scenarioFlags.isSameRTO || scenarioFlags.isOutOfState) forms.push('Form 28');
+                } else {
+                  forms.push('Form 29', 'Form 30');
+                }
+                if (scenarioFlags.hasLoan) forms.push('Form 35');
+                return forms.join(', ');
+              })()}. Answer a few questions and get pre-filled, print-ready forms in seconds.
+            </p>
+            <ul className={styles.formsNudgeFeatures}>
+              <li><Wand2 size={14} /> Auto-fills owner, vehicle &amp; bank details</li>
+              <li><Printer size={14} /> Live preview, edit &amp; print or save as PDF</li>
+            </ul>
+            <Link to="/forms" className={styles.formsNudgeCta}>
+              Generate My Forms <ArrowRight size={16} />
+            </Link>
           </div>
         </motion.div>
 

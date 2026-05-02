@@ -8,6 +8,7 @@ import Results from './pages/Results/Results';
 import Documents from './pages/Documents/Documents';
 import History from './pages/History/History';
 import Help from './pages/Help/Help';
+import Forms from './pages/Forms/Forms';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/start" element={<Start />} />
           <Route path="/check" element={<Check />} />
           <Route path="/results" element={<Results />} />
+          <Route path="/forms" element={<Forms />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/history" element={<History />} />
           <Route path="/help" element={<Help />} />
