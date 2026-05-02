@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form 36 - Application for Issue of Fresh Certificate of Registration in the Name of the Financier</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #e0e0e0;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 13pt;
+      color: #000;
+    }
+
+    /* ── A4 Page ── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      margin: 20px auto;
+      padding: 22mm 22mm 20mm 25mm;
+      box-shadow: 0 0 12px rgba(0,0,0,0.25);
+    }
+
+    /* ── Headings ── */
+    .form-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 14pt;
+      margin-bottom: 4px;
+    }
+    .refer-rule {
+      text-align: center;
+      font-size: 12.5pt;
+      margin-bottom: 5px;
+    }
+    .form-subtitle {
+      text-align: center;
+      font-weight: bold;
+      font-size: 12.5pt;
+      text-transform: uppercase;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    /* ── Body text ── */
+    p, .line-block {
+      font-size: 12.5pt;
+      line-height: 1.65;
+      text-align: justify;
+      margin: 0;
+    }
+    .indent   { padding-left: 36px; }
+    .to-label { font-size: 12.5pt; margin-bottom: 3px; }
+
+    /* ── Inline fields ── */
+    input.f {
+      border: none;
+      border-bottom: 1px dotted #555;
+      outline: none;
+      background: transparent;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12.5pt;
+      color: #000;
+      vertical-align: bottom;
+      padding: 0 2px;
+    }
+    input.f:focus {
+      border-bottom: 1.5px solid #1a56db;
+      background: #f0f6ff;
+    }
+
+    /* Checkbox-style strike-out options */
+    .option-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding-left: 36px;
+      margin: 4px 0;
+      font-size: 12.5pt;
+      line-height: 1.55;
+    }
+    .option-row input[type="checkbox"] {
+      margin-top: 3px;
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+      flex-shrink: 0;
+      accent-color: #1a56db;
+    }
+    .option-row label { cursor: pointer; line-height: 1.55; }
+
+    /* ── Date + Sig row ── */
+    .sig-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 8px;
+    }
+    .sig-left  { flex: 0 0 40%; font-size: 12.5pt; }
+    .sig-right { flex: 0 0 50%; font-size: 12.5pt; text-align: center; }
+    .sig-right input.f { width: 92%; }
+
+    /* ── Specimen block ── */
+    .specimen-block { font-size: 12.5pt; margin-top: 10px; line-height: 2.3; }
+    .specimen-block input.f { width: 68%; }
+
+    /* ── Gaps ── */
+    .gap    { margin-top: 14px; }
+    .gap-sm { margin-top:  7px; }
+    .gap-lg { margin-top: 20px; }
+
+    /* ── Strike note ── */
+    .strike-note { font-style: italic; font-size: 12pt; margin-top: 12px; }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      width: 210mm;
+      margin: 0 auto 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .toolbar button {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+    }
+    .btn-print { background: #1a56db; color: #fff; }
+    .btn-clear { background: #e5e7eb; color: #111; }
+    .btn-print:hover { background: #1647bf; }
+    .btn-clear:hover { background: #d1d5db; }
+    .toolbar-info { font-size: 12px; color: #555; font-family: Arial, sans-serif; }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; box-shadow: none; padding: 20mm 22mm 18mm 25mm; }
+      .no-print { display: none; }
+      input.f { border-bottom: 1px dotted #000 !important; background: transparent !important; }
+      /* Show checked options as underlined, unchecked as struck-through */
+      .option-row input[type="checkbox"] { display: none; }
+      .option-row.struck label { text-decoration: line-through; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Toolbar -->
+<div class="toolbar no-print">
+  <button class="btn-print" onclick="window.print()">🖨 Print / Save as PDF</button>
+  <button class="btn-clear" onclick="clearForm()">✕ Clear All Fields</button>
+  <span class="toolbar-info">Click any dotted line to type. Check applicable option(s). Tab between fields.</span>
+</div>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="form-title">FORM 36</div>
+  <div class="refer-rule">[<em>Refer Rule 61(2)</em>]</div>
+  <div class="form-subtitle">
+    Application for Issue of Fresh Certificate of Registration in the<br/>
+    Name of the Financier
+    <input class="f" type="text" id="f_financier_name_title" size="14"
+      placeholder="............." title="Financier name (in heading)" />
+  </div>
+
+  <!-- To block -->
+  <div class="to-label">To</div>
+  <div class="indent line-block">The Registering Authority,</div>
+  <div class="indent line-block">
+    <input class="f" type="text" id="f_reg_authority" size="46"
+      placeholder="............................................" title="Name / place of Registering Authority" />
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- Main declaration paragraph -->
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We<input class="f" type="text" id="f_financier_name" size="38"
+      placeholder="..................................." title="Financier name" />(financier) have taken possession of motor vehicle
+    no.<input class="f" type="text" id="f_vehicle_no" size="14"
+      placeholder="............." title="Vehicle registration number" />make<input class="f" type="text" id="f_make" size="14"
+      placeholder="............." title="Make of vehicle" />model<input class="f" type="text" id="f_model" size="18"
+      placeholder="................." title="Model" />owing to the default of the registered
+    owner<input class="f" type="text" id="f_owner_name_addr" size="64"
+      placeholder="................................................................" title="Registered owner name and full address" />(name and full address) under the provisions of the agreement of
+    hire-purchase/lease/hypothecation:
+  </p>
+
+  <div class="gap-sm"></div>
+
+  <!-- Three checkable options — tick applicable, strike inapplicable -->
+  <div class="option-row" id="opt_row_1">
+    <input type="checkbox" id="f_opt1" title="Check if RC is surrendered herewith" />
+    <label for="f_opt1">*(1) The certificate of registration of the said vehicle is surrendered herewith.</label>
+  </div>
+  <div class="option-row" id="opt_row_2">
+    <input type="checkbox" id="f_opt2" title="Check if registered owner refused to deliver RC" />
+    <label for="f_opt2">*(2) The registered owner has refused to deliver the certificate of registration to me/us.</label>
+  </div>
+  <div class="option-row" id="opt_row_3">
+    <input type="checkbox" id="f_opt3" title="Check if registered owner is absconding" />
+    <label for="f_opt3">*(3) The registered owner is absconding.</label>
+  </div>
+
+  <div class="gap-sm"></div>
+
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We request you to cancel the certificate and issue a fresh certificate of registration
+    in my/our name.
+  </p>
+
+  <div class="gap-sm"></div>
+
+  <p class="line-block indent">
+    I/We enclose a fee of Rs.
+    <input class="f" type="text" id="f_fee" size="28"
+      placeholder="..........................." title="Fee amount" />
+  </p>
+
+  <div class="gap"></div>
+
+  <!-- Date + Financier sig -->
+  <div class="sig-row">
+    <div class="sig-left">
+      Date<input class="f" type="text" id="f_date" size="20"
+        placeholder="................." title="Date" />
+    </div>
+    <div class="sig-right">
+      Signature of the financier<br/>
+      <input class="f" type="text" id="f_sig_financier" size="40"
+        placeholder="........................................." title="Signature of financier" />
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- Specimen signatures -->
+  <div class="specimen-block">
+    Specimen signatures of the financier<br/>
+    1.&nbsp;<input class="f" type="text" id="f_spec_fin_1" size="34"
+      placeholder="................................." title="Specimen signature 1" /><br/>
+    2.&nbsp;<input class="f" type="text" id="f_spec_fin_2" size="34"
+      placeholder="................................." title="Specimen signature 2" />
+  </div>
+
+  <div class="gap-sm"></div>
+
+  <!-- Mobile -->
+  <p class="line-block">
+    My/Our mobile number is
+    <input class="f" type="text" id="f_mobile" size="34"
+      placeholder="................................." title="Mobile number" />
+  </p>
+
+  <div class="gap-lg"></div>
+
+  <!-- Copy line -->
+  <p class="line-block">
+    Copy to the original registering authority
+  </p>
+
+  <!-- Strike note -->
+  <div class="strike-note">* <em>Strike out whichever is inapplicable.</em></div>
+
+</div><!-- /.page -->
+
+<script>
+  function clearForm() {
+    if (!confirm('Clear all filled data?')) return;
+    document.querySelectorAll('input.f').forEach(el => { el.value = ''; });
+    document.querySelectorAll('input[type="checkbox"]').forEach(el => { el.checked = false; });
+    localStorage.removeItem('form36_data');
+  }
+
+  const STORAGE_KEY = 'form36_data';
+
+  function saveData() {
+    const data = {};
+    document.querySelectorAll('input.f[id]').forEach(el => { data[el.id] = el.value; });
+    // Save checkboxes
+    ['f_opt1','f_opt2','f_opt3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) data[id] = el.checked;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function loadData() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      Object.entries(data).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.type === 'checkbox') el.checked = !!val;
+        else el.value = val;
+      });
+    } catch(e) {}
+  }
+
+  document.querySelectorAll('input.f, input[type="checkbox"]').forEach(el => {
+    el.addEventListener('change', saveData);
+    el.addEventListener('input',  saveData);
+  });
+
+  loadData();
+
+  /**
+   * Programmatic API — window.Form36
+   *
+   * Form36.fill({
+   *   f_reg_authority:       "RTO Chennai Central",
+   *   f_financier_name:      "HDFC Bank Ltd",
+   *   f_financier_name_title:"HDFC Bank Ltd",
+   *   f_vehicle_no:          "TN09AB1234",
+   *   f_make:                "Maruti Suzuki",
+   *   f_model:               "Swift 2022",
+   *   f_owner_name_addr:     "Rajesh Kumar, No.5 Anna Nagar, Chennai - 600040",
+   *   f_opt1: true,   // RC surrendered herewith
+   *   f_opt2: false,  // owner refused delivery
+   *   f_opt3: false,  // owner absconding
+   *   f_fee:                 "500",
+   *   f_date:                "01-05-2026",
+   *   f_mobile:              "9876543210"
+   * });
+   *
+   * All field IDs:
+   *   f_financier_name_title, f_reg_authority,
+   *   f_financier_name, f_vehicle_no, f_make, f_model, f_owner_name_addr,
+   *   f_opt1 (bool), f_opt2 (bool), f_opt3 (bool),
+   *   f_fee, f_date, f_sig_financier,
+   *   f_spec_fin_1, f_spec_fin_2, f_mobile
+   */
+  window.Form36 = {
+    fill(data) {
+      Object.entries(data).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.type === 'checkbox') el.checked = !!val;
+        else el.value = val;
+      });
+      saveData();
+    },
+    getData() {
+      const data = {};
+      document.querySelectorAll('input.f[id]').forEach(el => { data[el.id] = el.value; });
+      ['f_opt1','f_opt2','f_opt3'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) data[id] = el.checked;
+      });
+      return data;
+    },
+    clear() { clearForm(); },
+    print() { window.print(); }
+  };
+</script>
+
+</body>
+</html>

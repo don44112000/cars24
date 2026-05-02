@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form 29 - Notice of Transfer of Ownership of a Motor Vehicle</title>
+  <style>
+    /* ── Page Setup ── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #e0e0e0;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 13.5pt;
+      color: #000;
+    }
+
+    /* A4 Sheet */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      margin: 20px auto;
+      padding: 22mm 22mm 20mm 25mm;
+      box-shadow: 0 0 12px rgba(0,0,0,0.25);
+      position: relative;
+    }
+
+    /* ── Typography ── */
+    .form-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 14pt;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .refer-rule {
+      text-align: center;
+      font-style: italic;
+      font-size: 13pt;
+      margin-bottom: 6px;
+    }
+
+    .form-subtitle {
+      text-align: center;
+      font-weight: bold;
+      font-size: 13pt;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 10px;
+    }
+
+    .intro-note {
+      text-align: justify;
+      font-size: 12.5pt;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    p, .body-text {
+      font-size: 12.5pt;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    .to-label {
+      font-size: 12.5pt;
+      margin-bottom: 4px;
+    }
+
+    .indent {
+      padding-left: 40px;
+    }
+
+    .indent-lg {
+      padding-left: 55px;
+    }
+
+    .line-block {
+      margin: 6px 0;
+      font-size: 12.5pt;
+      line-height: 1.6;
+    }
+
+    /* ── Dotted input fields ── */
+    .field {
+      display: inline-block;
+      border-bottom: 1px dotted #000;
+      min-width: 80px;
+      position: relative;
+      vertical-align: bottom;
+    }
+
+    .field input[type="text"],
+    .field input[type="date"] {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12.5pt;
+      width: 100%;
+      padding: 0 2px;
+      color: #000;
+    }
+
+    /* Inline editable fields rendered as dotted underlines */
+    input.inline-field {
+      border: none;
+      border-bottom: 1px dotted #555;
+      outline: none;
+      background: transparent;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12.5pt;
+      color: #000;
+      vertical-align: bottom;
+      padding: 0 2px;
+    }
+
+    input.inline-field:focus {
+      border-bottom: 1.5px solid #1a56db;
+      background: #f0f6ff;
+    }
+
+    textarea.inline-field {
+      border: none;
+      border-bottom: 1px dotted #555;
+      outline: none;
+      background: transparent;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12.5pt;
+      color: #000;
+      resize: none;
+      vertical-align: bottom;
+      padding: 0 2px;
+      line-height: 1.5;
+    }
+
+    textarea.inline-field:focus {
+      border-bottom: 1.5px solid #1a56db;
+      background: #f0f6ff;
+    }
+
+    /* ── Section Separators ── */
+    .section-gap { margin-top: 10px; }
+    .section-gap-lg { margin-top: 18px; }
+
+    /* ── Two-column signature rows ── */
+    .sig-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 6px;
+    }
+
+    .sig-left { flex: 0 0 45%; font-size: 12.5pt; }
+    .sig-right { flex: 0 0 50%; font-size: 12.5pt; text-align: center; }
+
+    /* ── Office Endorsement ── */
+    .endorsement-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 13pt;
+      letter-spacing: 0.3px;
+      margin: 14px 0 8px;
+      text-transform: uppercase;
+    }
+
+    .ref-office-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5pt;
+      margin-bottom: 6px;
+    }
+
+    /* ── Note / italic lines ── */
+    .note-line {
+      font-size: 12.5pt;
+      margin: 8px 0 4px;
+    }
+
+    .note-line em { font-style: italic; font-weight: bold; }
+
+    .strike-note {
+      font-style: italic;
+      font-size: 12pt;
+      margin-top: 10px;
+    }
+
+    /* ── Print styles ── */
+    @media print {
+      body { background: #fff; }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        padding: 20mm 22mm 18mm 25mm;
+      }
+      .no-print { display: none; }
+      input.inline-field, textarea.inline-field {
+        border-bottom: 1px dotted #000 !important;
+        background: transparent !important;
+      }
+    }
+
+    /* ── Toolbar (non-print) ── */
+    .toolbar {
+      width: 210mm;
+      margin: 0 auto 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .toolbar button {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+    }
+
+    .btn-print {
+      background: #1a56db;
+      color: #fff;
+    }
+    .btn-clear {
+      background: #e5e7eb;
+      color: #111;
+    }
+    .btn-print:hover { background: #1647bf; }
+    .btn-clear:hover { background: #d1d5db; }
+
+    .toolbar-info {
+      font-size: 12px;
+      color: #555;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toolbar -->
+  <div class="toolbar no-print">
+    <button class="btn-print" onclick="window.print()">🖨 Print / Save as PDF</button>
+    <button class="btn-clear" onclick="clearForm()">✕ Clear All Fields</button>
+    <span class="toolbar-info">Click any dotted line to type. Tab to move between fields.</span>
+  </div>
+
+  <div class="page">
+
+    <!-- ══ HEADER ══ -->
+    <div class="form-title">FORM 29</div>
+    <div class="refer-rule">[Refer Rule 55(1)]</div>
+    <div class="form-subtitle">Notice of Transfer of Ownership of a Motor Vehicle</div>
+
+    <!-- Intro note -->
+    <p class="intro-note">
+      (To be made in duplicate and the duplicate copy with the endorsement of the registering authority
+      to be returned to the transferor or immediately on making entries of transfer of ownership in
+      certificate of registration and Form 24.)
+    </p>
+
+    <!-- ══ PART 1: TO THE REGISTERING AUTHORITY ══ -->
+    <div class="to-label">To</div>
+
+    <div class="indent line-block">
+      The Registering Authority<input class="inline-field" type="text" id="f_reg_authority" size="38"
+        placeholder="................................" title="Registering Authority name/place" />
+    </div>
+    <div class="indent line-block">
+      (in whose jurisdiction the transferee resides)
+    </div>
+
+    <div class="section-gap"></div>
+
+    <!-- Main declaration paragraph -->
+    <p class="line-block">
+      I/We<input class="inline-field" type="text" id="f_transferor_name" size="22"
+        placeholder="....................." title="Transferor Name(s)" />
+      resident of
+      <input class="inline-field" type="text" id="f_resident_of" size="16"
+        placeholder="..............." title="Place of residence" />
+      have on the
+      <input class="inline-field" type="text" id="f_date_of_transfer" size="22"
+        placeholder="........................." title="Date of transfer (day of the year)" />
+      day of the year
+      <input class="inline-field" type="text" id="f_year" size="10"
+        placeholder="........." title="Year" />
+      sold and delivered my/our vehicle no
+      <input class="inline-field" type="text" id="f_vehicle_no" size="18"
+        placeholder="................." title="Vehicle Registration Number" />
+      make
+      <input class="inline-field" type="text" id="f_make" size="18"
+        placeholder="................." title="Make of vehicle" />
+      chassis No.
+      <input class="inline-field" type="text" id="f_chassis_no" size="12"
+        placeholder="......" title="Chassis Number" />
+      engine No. or motor number in the case of Battery Operated Vehicles
+      <input class="inline-field" type="text" id="f_engine_no" size="22"
+        placeholder="....................." title="Engine / Motor Number" />
+      to
+      Shri/Smt.
+      <input class="inline-field" type="text" id="f_transferee_name" size="22"
+        placeholder="....................." title="Transferee Name" />
+      (Name) Son/wife/daughter of
+      <input class="inline-field" type="text" id="f_transferee_parent" size="16"
+        placeholder="..............." title="Transferee's father/husband name" />
+      residing at
+      <input class="inline-field" type="text" id="f_transferee_address" size="60"
+        placeholder="............................................................" title="Transferee's address (house No./street/village/town/distt. and State)" />
+      (house No./street village/town, distt. and State) under an agreement of hire/purchase/lease/hypothecation with
+      <input class="inline-field" type="text" id="f_financier" size="28"
+        placeholder="............................." title="Name of Financier / Agreement party" />
+    </p>
+
+    <div class="section-gap"></div>
+
+    <p class="line-block">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The registration certificate and insurance certificate have been handed over to him/her/them.
+    </p>
+
+    <div class="section-gap"></div>
+
+    <p class="line-block">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To the best of my/our knowledge and belief the vehicle is not superdari and free from all
+      encumbrances and information furnished is true. I/We undertake to hold my/our self-responsible for
+      any inaccuracy or suppression of information.
+    </p>
+
+    <div class="section-gap"></div>
+
+    <!-- Signature of Financier -->
+    <div class="line-block">Signature of the financier</div>
+    <div class="line-block">(to give his consent)</div>
+
+    <div class="section-gap"></div>
+
+    <!-- Date + Signature row -->
+    <div class="sig-row">
+      <div class="sig-left">
+        Date<input class="inline-field" type="text" id="f_date_transferor" size="20"
+          placeholder="....................." title="Date signed by transferor" />
+      </div>
+      <div class="sig-right">
+        Signature/digital signature/e-signature of owner of<br/>
+        motor vehicle or authorised dealer of registered vehicle<br/><br/>
+        <input class="inline-field" type="text" id="f_sig_transferor" size="40"
+          placeholder="........................................" title="Signature of owner/dealer" />
+      </div>
+    </div>
+
+    <!-- Date (right aligned) -->
+    <div style="text-align:right; margin-top: 10px; font-size:12.5pt;">
+      Date<input class="inline-field" type="text" id="f_date_right" size="30"
+        placeholder="......................................" title="Date" />
+    </div>
+
+    <!-- Transferee line -->
+    <div class="line-block">
+      I/We <input class="inline-field" type="text" id="f_transferee_sig_name" size="60"
+        placeholder="............................................................" title="Transferee name(s)" />
+      (Transferee)
+    </div>
+
+    <div class="section-gap-lg"></div>
+
+    <!-- ══ PART 2: COPY TO REGISTERING AUTHORITY ══ -->
+    <p class="line-block">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copy to the registering authority<input class="inline-field" type="text"
+        id="f_copy_to_ra" size="30" placeholder="..................." title="Registering authority (transferor's jurisdiction)" />in whose
+      jurisdiction the transferor resides.
+    </p>
+
+    <div class="section-gap"></div>
+
+    <!-- Note line -->
+    <div class="note-line">
+      <em>Note</em> : To be sent to the registering authority by registered post acknowledgment due.
+    </div>
+
+    <!-- ══ OFFICE ENDORSEMENT ══ -->
+    <div class="endorsement-title">Office Endorsement</div>
+
+    <!-- Ref No. + Office row -->
+    <div class="ref-office-row">
+      <span>
+        Ref. No. <input class="inline-field" type="text" id="f_ref_no" size="22"
+          placeholder="...................." title="Reference Number" />
+      </span>
+      <span>
+        Office of the<input class="inline-field" type="text" id="f_office_of" size="34"
+          placeholder="..................................." title="Office name/place" />
+      </span>
+    </div>
+
+    <p class="line-block">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The ownership of the vehicle has been transferred to the name of<input
+        class="inline-field" type="text" id="f_transferred_to" size="22"
+        placeholder="....................." title="Name of new owner" />with
+      the note of the above said agreement with effect from<input class="inline-field" type="text"
+        id="f_effect_from" size="18" placeholder="............." title="Effective date" />(date).
+    </p>
+
+    <div class="line-block">
+      Date<input class="inline-field" type="text" id="f_date_office" size="18"
+        placeholder="................." title="Office date" />
+    </div>
+
+    <div class="section-gap-lg"></div>
+
+    <div style="text-align:center; font-size:12.5pt;">
+      Signature of the registering authority with office seal.
+    </div>
+
+    <div style="text-align: center; margin-top:12px;">
+      <input class="inline-field" type="text" id="f_ra_sig" size="50"
+        placeholder=".................................................." title="Registering authority signature" />
+    </div>
+
+    <div class="section-gap"></div>
+
+    <!-- Strike note -->
+    <div class="strike-note">* <em>Strike out whichever is inapplicable.</em></div>
+
+    <div class="section-gap-lg"></div>
+
+    <!-- ══ FINAL TO BLOCK ══ -->
+    <div class="to-label">To</div>
+    <div class="indent line-block">
+      The transferor <input class="inline-field" type="text" id="f_transferor_address" size="55"
+        placeholder="..................................................." title="Transferor address" />
+    </div>
+    <div class="indent line-block">
+      (to be sent by Regd. post acknowledgement due)
+    </div>
+
+  </div><!-- /.page -->
+
+  <script>
+    // ── Clear all form fields ──
+    function clearForm() {
+      if (!confirm('Clear all filled data?')) return;
+      document.querySelectorAll('input.inline-field, textarea.inline-field').forEach(el => {
+        el.value = '';
+      });
+    }
+
+    // ── Auto-save to localStorage ──
+    const STORAGE_KEY = 'form29_data';
+
+    function saveData() {
+      const data = {};
+      document.querySelectorAll('input.inline-field[id], textarea.inline-field[id]').forEach(el => {
+        data[el.id] = el.value;
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function loadData() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        Object.entries(data).forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if (el) el.value = val;
+        });
+      } catch(e) {}
+    }
+
+    // Attach change listeners
+    document.querySelectorAll('input.inline-field, textarea.inline-field').forEach(el => {
+      el.addEventListener('input', saveData);
+    });
+
+    // Load on page start
+    loadData();
+
+    // ── Expose helper for programmatic use ──
+    window.Form29 = {
+      /**
+       * Fill the form programmatically.
+       * Pass an object with field IDs as keys.
+       * Example:
+       *   Form29.fill({
+       *     f_transferor_name: "Rajesh Kumar",
+       *     f_vehicle_no: "TN09AB1234",
+       *     f_chassis_no: "MA3EWDE1S00123456",
+       *     f_engine_no: "K10B1234567",
+       *     f_make: "Maruti Suzuki",
+       *     f_transferee_name: "Suresh Babu",
+       *     f_date_of_transfer: "15th",
+       *     f_year: "2025"
+       *   });
+       */
+      fill(data) {
+        Object.entries(data).forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if (el) el.value = val;
+        });
+        saveData();
+      },
+
+      /** Get all current field values as an object */
+      getData() {
+        const data = {};
+        document.querySelectorAll('input.inline-field[id], textarea.inline-field[id]').forEach(el => {
+          data[el.id] = el.value;
+        });
+        return data;
+      },
+
+      /** Clear all fields */
+      clear() { clearForm(); },
+
+      /** Print the form */
+      print() { window.print(); }
+    };
+  </script>
+
+</body>
+</html>

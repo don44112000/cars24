@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form 32 - Application for Transfer of Ownership in Case of Motor Vehicle Purchased or Acquired in Public Auction</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #e0e0e0;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 13pt;
+      color: #000;
+    }
+
+    /* ── A4 Page ── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      margin: 20px auto;
+      padding: 22mm 22mm 20mm 25mm;
+      box-shadow: 0 0 12px rgba(0,0,0,0.25);
+    }
+
+    /* ── Headings ── */
+    .form-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 14pt;
+      margin-bottom: 4px;
+    }
+    .refer-rule {
+      text-align: center;
+      font-size: 12.5pt;
+      margin-bottom: 6px;
+    }
+    .form-subtitle {
+      text-align: center;
+      font-weight: bold;
+      font-size: 12.5pt;
+      text-transform: uppercase;
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+
+    /* ── Body ── */
+    .to-label  { font-size: 12.5pt; margin-bottom: 4px; }
+    .indent    { padding-left: 36px; }
+    .line-block {
+      font-size: 12.5pt;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ── Inline fields ── */
+    input.f {
+      border: none;
+      border-bottom: 1px dotted #555;
+      outline: none;
+      background: transparent;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12.5pt;
+      color: #000;
+      vertical-align: bottom;
+      padding: 0 2px;
+    }
+    input.f:focus {
+      border-bottom: 1.5px solid #1a56db;
+      background: #f0f6ff;
+    }
+
+    /* ── Signature row ── */
+    .sig-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 8px;
+    }
+    .sig-left  { flex: 0 0 35%; font-size: 12.5pt; }
+    .sig-right { flex: 0 0 58%; font-size: 12.5pt; text-align: center; }
+    .sig-right input.f { width: 92%; }
+
+    /* ── Note ── */
+    .note-line {
+      font-size: 12.5pt;
+      line-height: 1.55;
+      margin-top: 16px;
+    }
+    .note-line em { font-style: italic; font-weight: bold; }
+
+    /* ── Gaps ── */
+    .gap    { margin-top: 14px; }
+    .gap-sm { margin-top:  7px; }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      width: 210mm;
+      margin: 0 auto 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .toolbar button {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+    }
+    .btn-print { background: #1a56db; color: #fff; }
+    .btn-clear { background: #e5e7eb; color: #111; }
+    .btn-print:hover { background: #1647bf; }
+    .btn-clear:hover { background: #d1d5db; }
+    .toolbar-info { font-size: 12px; color: #555; font-family: Arial, sans-serif; }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; box-shadow: none; padding: 20mm 22mm 18mm 25mm; }
+      .no-print { display: none; }
+      input.f { border-bottom: 1px dotted #000 !important; background: transparent !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Toolbar -->
+<div class="toolbar no-print">
+  <button class="btn-print" onclick="window.print()">🖨 Print / Save as PDF</button>
+  <button class="btn-clear" onclick="clearForm()">✕ Clear All Fields</button>
+  <span class="toolbar-info">Click any dotted line to type. Tab between fields.</span>
+</div>
+
+<div class="page">
+
+  <div class="form-title">FORM 32</div>
+  <div class="refer-rule">[<em>Refer Rule 57(1)</em>]</div>
+  <div class="form-subtitle">
+    Application for Transfer of Ownership in Case of Motor Vehicle<br/>
+    Purchased or Acquired in Public Auction
+  </div>
+
+  <!-- To block -->
+  <div class="to-label">To</div>
+  <div class="indent line-block">The Registering Authority,</div>
+  <div class="indent line-block">
+    <input class="f" type="text" id="f_reg_authority" size="46"
+      placeholder="............................................" title="Name / place of Registering Authority" />
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- Main declaration paragraph -->
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We<input class="f" type="text" id="f_applicant_name" size="16"
+      placeholder="..............." title="Applicant name(s)" />son/wife/daughter of
+    <input class="f" type="text" id="f_parent_name" size="54"
+      placeholder="..................................................." title="Parent / spouse name" />
+    (full address along with proof) have purchased or acquired the vehicle no.
+    <input class="f" type="text" id="f_vehicle_no" size="16"
+      placeholder="..............." title="Vehicle registration number" />
+    bearing chassis no.<input class="f" type="text" id="f_chassis_no" size="18"
+      placeholder="................." title="Chassis number" />
+    engine No. or motor number in the case of Battery Operated Vehicles
+    <input class="f" type="text" id="f_engine_no" size="14"
+      placeholder="............." title="Engine / motor number" />
+    make
+    <input class="f" type="text" id="f_make" size="26"
+      placeholder="........................." title="Make of vehicle" />
+    model
+    <input class="f" type="text" id="f_model" size="12"
+      placeholder="..........." title="Model" />
+    type of vehicle
+    <input class="f" type="text" id="f_type" size="20"
+      placeholder="..................." title="Type of vehicle" />
+    in public auction conducted by or on behalf of the government.
+  </p>
+
+  <div class="gap"></div>
+
+  <!-- Nominee paragraph -->
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We hereby declare
+    <input class="f" type="text" id="f_nominee_name" size="48"
+      placeholder="..................................................." title="Nominee name" />
+    as the nominee for this vehicle who is my/our
+    <input class="f" type="text" id="f_nominee_relation" size="52"
+      placeholder="..................................................." title="Relationship with nominee" />
+  </p>
+
+  <div class="gap"></div>
+
+  <!-- Documents paragraph -->
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/We enclose the documents required to be submitted by me/us under sub-rule
+    (1) of rule 57.
+  </p>
+
+  <div class="gap-sm"></div>
+
+  <!-- Mobile number -->
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;My/Our mobile number is
+    <input class="f" type="text" id="f_mobile" size="34"
+      placeholder="................................." title="Mobile number" />
+  </p>
+
+  <div class="gap-sm"></div>
+
+  <!-- Transfer request -->
+  <p class="line-block">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The ownership of the motor vehicle may kindly be transferred to my/our name.
+  </p>
+
+  <div class="gap"></div>
+
+  <!-- Date + Signature -->
+  <div class="sig-row">
+    <div class="sig-left">
+      Date<input class="f" type="text" id="f_date" size="20"
+        placeholder="................." title="Date" />
+    </div>
+    <div class="sig-right">
+      Signature or thumb impression of the applicant<br/>
+      <input class="f" type="text" id="f_sig_applicant" size="46"
+        placeholder="............................................" title="Signature or thumb impression" />
+    </div>
+  </div>
+
+  <!-- Note -->
+  <div class="note-line">
+    <em>Note</em> : After the death of the registered owner of the vehicle, the ownership of the
+    vehicle shall be transferred to the nominee.
+  </div>
+
+</div><!-- /.page -->
+
+<script>
+  function clearForm() {
+    if (!confirm('Clear all filled data?')) return;
+    document.querySelectorAll('input.f').forEach(el => { el.value = ''; });
+    localStorage.removeItem('form32_data');
+  }
+
+  const STORAGE_KEY = 'form32_data';
+
+  function saveData() {
+    const data = {};
+    document.querySelectorAll('input.f[id]').forEach(el => { data[el.id] = el.value; });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function loadData() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      Object.entries(data).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      });
+    } catch(e) {}
+  }
+
+  document.querySelectorAll('input.f').forEach(el => {
+    el.addEventListener('input', saveData);
+  });
+
+  loadData();
+
+  /**
+   * Programmatic API — window.Form32
+   *
+   * Form32.fill({
+   *   f_reg_authority:    "RTO Chennai Central",
+   *   f_applicant_name:   "Rajesh Kumar",
+   *   f_parent_name:      "Suresh Kumar, No.5 Anna Nagar, Chennai - 600040",
+   *   f_vehicle_no:       "TN09AB1234",
+   *   f_chassis_no:       "MA3EWDE1S00123456",
+   *   f_engine_no:        "K10B1234567",
+   *   f_make:             "Maruti Suzuki",
+   *   f_model:            "Swift",
+   *   f_type:             "Motor Car",
+   *   f_nominee_name:     "Priya Kumar",
+   *   f_nominee_relation: "Wife",
+   *   f_mobile:           "9876543210",
+   *   f_date:             "01-05-2026"
+   * });
+   *
+   * Field IDs:
+   *   f_reg_authority, f_applicant_name, f_parent_name,
+   *   f_vehicle_no, f_chassis_no, f_engine_no,
+   *   f_make, f_model, f_type,
+   *   f_nominee_name, f_nominee_relation,
+   *   f_mobile, f_date, f_sig_applicant
+   */
+  window.Form32 = {
+    fill(data) {
+      Object.entries(data).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      });
+      saveData();
+    },
+    getData() {
+      const data = {};
+      document.querySelectorAll('input.f[id]').forEach(el => { data[el.id] = el.value; });
+      return data;
+    },
+    clear() { clearForm(); },
+    print() { window.print(); }
+  };
+</script>
+
+</body>
+</html>
