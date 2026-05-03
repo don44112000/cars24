@@ -33,6 +33,14 @@ export default function Header() {
             Documents
           </NavLink>
           <NavLink
+            to="/verify"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ''}`
+            }
+          >
+            Verify Docs
+          </NavLink>
+          <NavLink
             to="/history"
             className={({ isActive }) =>
               `${styles.navLink} ${isActive ? styles.active : ''}`
