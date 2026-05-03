@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ShoppingCart, Tag, ArrowRight, Shield, Check } from 'lucide-react';
 import type { UserRole, ScenarioFlags } from '../../types/checklist';
 import { useChecklistStore } from '../../store/checklistStore';
-import { formatRegNo, isValidRegNo, stripRegNo } from '../../components/FormShared';
+import { formatRegNo, isValidRegNo, stripRegNo } from '../../components/FormShared/utils';
 import styles from './Start.module.css';
 
 export default function Start() {

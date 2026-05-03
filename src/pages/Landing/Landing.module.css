@@ -164,15 +164,34 @@
 }
 
 .heroRight {
+  position: relative;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  min-height: 460px;
+}
+
+/* Centered car backdrop — sits above the hero gradient blobs but below
+   all heroInner content (heroLeft text + heroRight wizard card). */
+.heroBackdrop {
+  position: absolute;
+  z-index: 1;
+  left: calc(50% + 113px);
+  top: calc(50% + 75px);
+  transform: translate(-50%, -50%);
+  width: 40%;
+  max-width: 480px;
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 30px 60px rgba(15, 23, 42, 0.35));
 }
 
 /* Wizard preview card on the right */
 .wizardCard {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: 420px;
+  max-width: 380px;
   background: rgba(255, 255, 255, 0.96);
   color: var(--color-text);
   border-radius: var(--radius-2xl);

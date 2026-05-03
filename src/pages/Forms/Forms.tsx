@@ -7,8 +7,8 @@ import {
 } from 'lucide-react';
 import {
   Bubble, Field, RegNoField, NumberField, Combobox, DateField, ToggleRow, PreviewModal,
-  isValidRegNo, isValidMobile, isValidAge,
 } from '../../components/FormShared';
+import { isValidRegNo, isValidMobile, isValidAge } from '../../components/FormShared/utils';
 import {
   emptyAnswers,
   recommendForms,

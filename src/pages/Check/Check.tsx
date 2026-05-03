@@ -417,6 +417,7 @@ export default function CheckPage() {
 
   const [mode, setMode] = useState<Mode>('focus');
   const [currentIdx, setCurrentIdx] = useState(0);
+  const [anchoredSessionId, setAnchoredSessionId] = useState<string | null>(null);
 
   // Build a flat list of all visible items + a phase short-label per item
   const { flatItems, phaseLabelByIdx, visiblePhases } = useMemo(() => {
@@ -437,14 +438,15 @@ export default function CheckPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phases, activeSession?.items]);
 
-  // Initialise focus on the first pending item when the session loads
-  useEffect(() => {
-    if (!flatItems.length) return;
+  // Anchor focus to the first pending item when the session changes.
+  // Done during render (not in an effect) so the first paint already shows
+  // the correct item — no flash of currentIdx = 0.
+  const sessionId = activeSession?.id ?? null;
+  if (sessionId !== anchoredSessionId && flatItems.length > 0) {
     const firstPending = flatItems.findIndex((it) => getStatus(it.id) === 'pending');
     setCurrentIdx(firstPending === -1 ? flatItems.length - 1 : firstPending);
-    // run only on session change, not every status change
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeSession?.id, flatItems.length]);
+    setAnchoredSessionId(sessionId);
+  }
 
   const currentItem = flatItems[currentIdx];
   const allAnswered = progress.pendingCount === 0 && flatItems.length > 0;

@@ -2,39 +2,9 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Check, Calendar, Printer, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
 import { buildFormUrl, FORM_META, type FormId, type WizardAnswers } from '../../data/formGenerator';
+import { useBodyScrollLock } from '../../hooks/useBodyScrollLock';
+import { diagnoseRegNo, formatRegNo, REG_NO_PATTERN, stripRegNo } from './utils';
 import styles from './FormShared.module.css';
-
-// ─────────────────────────── Validation helpers ───────────────────────────
-
-export const REG_NO_PATTERN = /^[A-Z]{2}\d{2}[A-Z]{2}\d{4}$/;
-
-export function stripRegNo(v: string): string {
-  return v.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 10);
-}
-
-export function isValidRegNo(v: string): boolean {
-  return REG_NO_PATTERN.test(stripRegNo(v));
-}
-
-export function formatRegNo(raw: string): string {
-  const c = stripRegNo(raw);
-  if (!c) return '';
-  const parts: string[] = [c.slice(0, 2)];
-  if (c.length > 2) parts.push(c.slice(2, 4));
-  if (c.length > 4) parts.push(c.slice(4, 6));
-  if (c.length > 6) parts.push(c.slice(6, 10));
-  return parts.join(' ');
-}
-
-export function isValidMobile(v: string): boolean {
-  return /^[6-9]\d{9}$/.test(v);
-}
-
-export function isValidAge(v: string): boolean {
-  if (!v) return false;
-  const n = parseInt(v, 10);
-  return Number.isFinite(n) && n >= 18 && n <= 120;
-}
 
 // ─────────────────────────── Bubble ───────────────────────────
 
@@ -102,21 +72,7 @@ export function RegNoField({
 }) {
   const stripped = stripRegNo(value);
   const valid = REG_NO_PATTERN.test(stripped);
-
-  let error: string | null = null;
-  if (value && !valid) {
-    if (stripped.length < 10) {
-      error = `Need 10 characters total (you have ${stripped.length}).`;
-    } else if (!/^[A-Z]{2}/.test(stripped)) {
-      error = 'First 2 must be letters (state code, e.g. MH).';
-    } else if (!/^[A-Z]{2}\d{2}/.test(stripped)) {
-      error = 'Position 3–4 must be digits (RTO code).';
-    } else if (!/^[A-Z]{2}\d{2}[A-Z]{2}/.test(stripped)) {
-      error = 'Position 5–6 must be letters (series).';
-    } else {
-      error = 'Last 4 must be digits.';
-    }
-  }
+  const error = valid ? null : diagnoseRegNo(value);
 
   return (
     <label className={`${styles.field} ${full ? styles.fieldFull : ''}`}>
@@ -136,9 +92,9 @@ export function RegNoField({
       {error ? (
         <span className={styles.fieldError} role="alert" aria-live="polite">{error}</span>
       ) : value && valid ? (
-        <span className={styles.fieldHelpOk} aria-live="polite">Looks good — AA NN AA NNNN format.</span>
+        <span className={styles.fieldHelpOk} aria-live="polite">Looks good.</span>
       ) : (
-        <span className={styles.fieldHelp}>Format: 2 letters · 2 digits · 2 letters · 4 digits</span>
+        <span className={styles.fieldHelp}>Format: 2 letters · 2 digits · 1–3 series letters · 4 digits</span>
       )}
     </label>
   );
@@ -261,12 +217,6 @@ export function Combobox({
   }, [options, search]);
 
   useEffect(() => {
-    if (!open) return;
-    const idx = filtered.findIndex((o) => o === value);
-    setActiveIdx(idx >= 0 ? idx : 0);
-  }, [open, filtered, value]);
-
-  useEffect(() => {
     if (!open || !listRef.current) return;
     const items = listRef.current.querySelectorAll('li');
     items[activeIdx]?.scrollIntoView({ block: 'nearest' });
@@ -281,6 +231,8 @@ export function Combobox({
   const openList = () => {
     setOpen(true);
     setSearch('');
+    const idx = options.findIndex((o) => o === value);
+    setActiveIdx(idx >= 0 ? idx : 0);
     setTimeout(() => inputRef.current?.select(), 0);
   };
 
@@ -307,7 +259,7 @@ export function Combobox({
           value={displayValue}
           onFocus={openList}
           onClick={() => { if (!open) openList(); }}
-          onChange={(e) => { setSearch(e.target.value); setOpen(true); }}
+          onChange={(e) => { setSearch(e.target.value); setOpen(true); setActiveIdx(0); }}
           onKeyDown={(e) => {
             if (e.key === 'ArrowDown') {
               e.preventDefault();
@@ -377,7 +329,6 @@ export function Combobox({
 
 // ─────────────────────────── Calendar (custom popup) ───────────────────────────
 
-const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const MONTHS_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const WEEKDAYS = ['Mo','Tu','We','Th','Fr','Sa','Su'];
 
@@ -572,9 +523,6 @@ export function DateField({
   );
 }
 
-// Re-export for documentation completeness
-export { MONTHS_SHORT };
-
 // ─────────────────────────── ToggleRow ───────────────────────────
 
 export function ToggleRow({
@@ -635,18 +583,18 @@ export function FormFillModal({
   const titleId = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
 
+  useBodyScrollLock(true);
+
   useEffect(() => {
     const previousFocus = document.activeElement as HTMLElement | null;
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
     const focusTimer = window.setTimeout(() => {
       dialogRef.current?.focus();
     }, 0);
     return () => {
       window.clearTimeout(focusTimer);
       window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
       previousFocus?.focus?.();
     };
   }, [onClose]);
@@ -725,18 +673,18 @@ export function PreviewModal({
   const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
 
+  useBodyScrollLock(true);
+
   useEffect(() => {
     const previousFocus = document.activeElement as HTMLElement | null;
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
     const focusTimer = window.setTimeout(() => {
       dialogRef.current?.focus();
     }, 0);
     return () => {
       window.clearTimeout(focusTimer);
       window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
       previousFocus?.focus?.();
     };
   }, [onClose]);

@@ -2,7 +2,6 @@
   background: var(--color-footer-bg);
   color: rgba(255, 255, 255, 0.65);
   padding: var(--space-3xl) var(--space-lg) var(--space-xl);
-  margin-top: var(--space-3xl);
 }
 
 .tagline {

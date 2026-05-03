@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, Tag, ArrowRight } from 'lucide-react';
 import type { UserRole, ScenarioFlags } from '../../types/checklist';
 import { useChecklistStore } from '../../store/checklistStore';
-import { formatRegNo, isValidRegNo, stripRegNo } from '../../components/FormShared';
+import { formatRegNo, isValidRegNo, stripRegNo } from '../../components/FormShared/utils';
 import styles from './WizardSetup.module.css';
 
 export default function WizardSetup() {

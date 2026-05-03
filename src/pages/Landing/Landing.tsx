@@ -109,6 +109,13 @@ export default function Landing() {
           <div className={styles.heroBlob2} />
         </div>
 
+        <img
+          src="/assets/new%20car%20png.png"
+          alt=""
+          aria-hidden="true"
+          className={styles.heroBackdrop}
+        />
+
         <div className={styles.heroInner}>
           <motion.div
             className={styles.heroLeft}
