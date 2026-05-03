@@ -1,7 +1,19 @@
 {
   "name": "rc-ready",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "0.1.0",
+  "description": "A free, guided companion for transferring car ownership in Maharashtra. Walks buyers and sellers through every check, document, and RTO form required for a legally clean RC transfer.",
+  "keywords": [
+    "rc-transfer",
+    "maharashtra",
+    "used-car",
+    "rto",
+    "vehicle-ownership",
+    "motor-vehicles-act",
+    "second-hand-car",
+    "ownership-transfer"
+  ],
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
