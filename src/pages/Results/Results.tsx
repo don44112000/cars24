@@ -262,9 +262,9 @@ export default function Results() {
   const documents = getDocumentsNeeded(role, scenarioFlags);
 
   const getScoreColor = (s: number) => {
-    if (s >= 80) return '#4CAF50';
-    if (s >= 50) return '#FF9800';
-    return '#F44336';
+    if (s >= 80) return 'var(--color-success)';
+    if (s >= 50) return 'var(--color-important)';
+    return 'var(--color-critical)';
   };
 
   const getVerdict = (s: number) => {
@@ -340,22 +340,22 @@ export default function Results() {
 
               <div className={styles.miniStats}>
                 <div className={styles.miniStat}>
-                  <div className={styles.miniStatDot} style={{ background: '#4CAF50' }} />
+                  <div className={styles.miniStatDot} style={{ background: 'var(--color-success)' }} />
                   <span className={styles.miniStatLabel}>Ready</span>
                   <span className={styles.miniStatValue}>{progress.yesCount}</span>
                 </div>
                 <div className={styles.miniStat}>
-                  <div className={styles.miniStatDot} style={{ background: '#F44336' }} />
+                  <div className={styles.miniStatDot} style={{ background: 'var(--color-critical)' }} />
                   <span className={styles.miniStatLabel}>Action</span>
                   <span className={styles.miniStatValue}>{progress.noCount}</span>
                 </div>
                 <div className={styles.miniStat}>
-                  <div className={styles.miniStatDot} style={{ background: '#9E9E9E' }} />
+                  <div className={styles.miniStatDot} style={{ background: 'var(--color-text-muted)' }} />
                   <span className={styles.miniStatLabel}>Skipped</span>
                   <span className={styles.miniStatValue}>{progress.naCount}</span>
                 </div>
                 <div className={styles.miniStat}>
-                  <div className={styles.miniStatDot} style={{ background: '#42A5F5' }} />
+                  <div className={styles.miniStatDot} style={{ background: 'var(--color-primary)' }} />
                   <span className={styles.miniStatLabel}>Pending</span>
                   <span className={styles.miniStatValue}>{progress.pendingCount}</span>
                 </div>

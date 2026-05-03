@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ShoppingCart, Tag, ArrowRight, Shield, Check } from 'lucide-react';
 import type { UserRole, ScenarioFlags } from '../../types/checklist';
 import { useChecklistStore } from '../../store/checklistStore';
+import { formatRegNo, isValidRegNo, stripRegNo } from '../../components/FormShared';
 import styles from './Start.module.css';
 
 export default function Start() {
@@ -21,9 +22,16 @@ export default function Start() {
     isSameRTO: true,
   });
 
+  const regStripped = stripRegNo(vehicleRegNo);
+  const regTouched = regStripped.length > 0;
+  const regValid = isValidRegNo(vehicleRegNo);
+  const regError = regTouched && !regValid;
+
   const handleSubmit = () => {
     if (!role) return;
-    startSession(role, vehicleRegNo.trim().toUpperCase(), flags);
+    if (regError) return;
+    const cleaned = regTouched ? formatRegNo(vehicleRegNo) : '';
+    startSession(role, cleaned, flags);
     navigate('/check');
   };
 
@@ -95,12 +103,28 @@ export default function Start() {
           </label>
           <input
             type="text"
-            className={styles.input}
+            inputMode="text"
+            autoComplete="off"
+            autoCapitalize="characters"
+            spellCheck={false}
+            className={`${styles.input} ${regError ? styles.inputError : ''}`}
             placeholder="e.g. MH 01 AB 1234"
             value={vehicleRegNo}
-            onChange={(e) => setVehicleRegNo(e.target.value)}
-            maxLength={15}
+            onChange={(e) => setVehicleRegNo(formatRegNo(e.target.value))}
+            maxLength={13}
+            aria-invalid={regError}
           />
+          {regError ? (
+            <span className={styles.inputErrorMsg}>
+              Use the AA NN AA NNNN format — e.g. MH 12 AB 1234.
+            </span>
+          ) : regTouched && regValid ? (
+            <span className={styles.inputHelpOk}>Looks good.</span>
+          ) : (
+            <span className={styles.inputHelp}>
+              Optional — leave blank or use 2 letters · 2 digits · 2 letters · 4 digits.
+            </span>
+          )}
         </div>
 
         {/* Scenario Toggles */}
@@ -162,7 +186,7 @@ export default function Start() {
         <button
           className={styles.submit}
           onClick={handleSubmit}
-          disabled={!role}
+          disabled={!role || regError}
         >
           Start Check <ArrowRight size={18} />
         </button>

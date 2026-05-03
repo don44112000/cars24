@@ -381,7 +381,7 @@
 .bigBtnYes {
   background: var(--color-success-bg);
   color: var(--color-success);
-  border-color: #C8E6C9;
+  border-color: var(--color-success-bg);
 }
 
 .bigBtnYes:hover, .bigBtnYesActive {
@@ -393,7 +393,7 @@
 .bigBtnNo {
   background: var(--color-critical-bg);
   color: var(--color-critical);
-  border-color: #FFCDD2;
+  border-color: var(--color-critical-bg);
 }
 
 .bigBtnNo:hover, .bigBtnNoActive {
@@ -417,8 +417,8 @@
 /* Fix panel (in focus card) */
 .focusFix {
   margin-top: var(--space-md);
-  background: #FFF8F0;
-  border: 1px solid #FFE0B2;
+  background: var(--color-important-bg);
+  border: 1px solid var(--color-important);
   border-radius: var(--radius-md);
   padding: var(--space-md) var(--space-lg);
   overflow: hidden;
@@ -476,7 +476,7 @@
   gap: var(--space-sm);
   margin-top: var(--space-md);
   padding-top: var(--space-md);
-  border-top: 1px dashed #FFE0B2;
+  border-top: 1px dashed var(--color-important);
 }
 
 .fixActionPrimary {
@@ -618,7 +618,7 @@
   background: var(--color-cta);
   color: white;
   border-color: var(--color-cta);
-  box-shadow: 0 4px 14px rgba(239, 108, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
 }
 
 .navReportReady:hover {
@@ -684,14 +684,14 @@
   border-radius: var(--radius-full);
   text-decoration: none;
   transition: all var(--transition-fast);
-  box-shadow: 0 6px 20px rgba(239, 108, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3);
 }
 
 .doneCta:hover {
   background: var(--color-cta-hover);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(239, 108, 0, 0.4);
+  box-shadow: 0 10px 28px rgba(79, 70, 229, 0.4);
 }
 
 /* ─────────────────────────────────────────────
@@ -759,7 +759,7 @@
   border-radius: var(--radius-full);
   text-decoration: none;
   transition: all var(--transition-fast);
-  box-shadow: 0 4px 14px rgba(239, 108, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
 }
 
 .reviewReportBtn:hover {
@@ -953,8 +953,8 @@
 
 .fixPanel {
   margin-top: var(--space-sm);
-  background: #FFF8F0;
-  border: 1px solid #FFE0B2;
+  background: var(--color-important-bg);
+  border: 1px solid var(--color-important);
   border-radius: var(--radius-sm);
   padding: var(--space-md);
 }
@@ -1034,8 +1034,8 @@
 
 /* Action pills (review rows) */
 .pill {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-sm);
   border: 1.5px solid var(--color-border);
   background: var(--color-surface);

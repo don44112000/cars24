@@ -115,18 +115,27 @@
 }
 
 .fieldInput {
-  padding: 10px var(--space-md);
+  padding: 11px var(--space-md);
   font-size: var(--font-size-base);
   border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   background: var(--color-surface);
   color: var(--color-text);
   outline: none;
-  transition: border-color var(--transition-fast);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.fieldInput:hover {
+  border-color: var(--color-primary-200);
 }
 
 .fieldInput:focus {
   border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.fieldInputError:focus {
+  box-shadow: var(--focus-ring-critical);
 }
 
 .fieldInput::placeholder {
@@ -181,12 +190,12 @@
 
 .comboToggle {
   position: absolute;
-  right: 6px;
+  right: 4px;
   top: 50%;
   transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-xs);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
   border: none;
   background: transparent;
   color: var(--color-text-muted);
@@ -281,77 +290,220 @@
   font-style: italic;
 }
 
-/* ── Date field ── */
-.dateField {
+/* ── Date field & calendar ── */
+.dateFieldWrap {
   position: relative;
+  display: block;
+}
+
+.dateField {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  padding: 10px var(--space-md);
+  padding: 11px var(--space-md);
   font-size: var(--font-size-base);
+  font-family: inherit;
   border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   background: var(--color-surface);
   color: var(--color-text);
   cursor: pointer;
-  transition: border-color var(--transition-fast);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
   outline: none;
+  text-align: left;
 }
 
 .dateField:hover {
-  border-color: var(--color-text-muted);
+  border-color: var(--color-primary-200);
 }
 
-.dateField:focus-within,
-.dateField:focus {
+.dateField:focus-visible,
+.dateFieldOpen {
   border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
 }
 
 .dateValue {
   flex: 1;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
+  color: var(--color-text);
 }
 
 .datePlaceholder {
   flex: 1;
   color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
 }
 
 .dateIcon {
   color: var(--color-text-muted);
   flex-shrink: 0;
-  pointer-events: none;
 }
 
 .dateField:hover .dateIcon,
-.dateField:focus-within .dateIcon {
+.dateFieldOpen .dateIcon {
   color: var(--color-primary);
 }
 
-.dateNative {
+/* ── Calendar popup ── */
+.calPopup {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-family: var(--font-family);
-  color-scheme: light;
+  z-index: 60;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 296px;
+  max-width: calc(100vw - var(--space-md) * 2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 12px;
+  user-select: none;
 }
 
-.dateNative::-webkit-calendar-picker-indicator {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+.calHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: 0 4px 8px;
+}
+
+.calTitle {
+  flex: 1;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text);
+  letter-spacing: -0.005em;
+}
+
+.calNav {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
   cursor: pointer;
-  opacity: 0;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.calNav:hover {
+  background: var(--color-primary-50);
+  color: var(--color-primary);
+}
+
+.calWeek {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  padding: 4px 0;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.calWeekDay {
+  text-align: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--fw-bold);
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 0;
+}
+
+.calGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  padding: 4px 0;
+}
+
+.calCell {
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  font-variant-numeric: tabular-nums;
+}
+
+.calCell:hover {
+  background: var(--color-primary-50);
+  color: var(--color-primary-dark);
+}
+
+.calCellOutside {
+  color: var(--color-text-muted);
+  opacity: 0.55;
+}
+
+.calCellToday {
+  position: relative;
+}
+.calCellToday::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+.calCellSelected {
+  background: var(--color-primary);
+  color: #ffffff;
+  font-weight: var(--fw-bold);
+}
+.calCellSelected:hover {
+  background: var(--color-primary-hover);
+  color: #ffffff;
+}
+.calCellSelected.calCellToday::after {
+  background: #ffffff;
+}
+
+.calFoot {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding-top: 8px;
+  margin-top: 4px;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.calFootBtn {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.calFootBtn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-50);
 }
 
 /* ── Preview Modal ── */
@@ -430,22 +582,22 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px var(--space-md);
+  padding: 8px var(--space-md);
   font-size: var(--font-size-sm);
-  font-weight: var(--fw-bold);
+  font-weight: var(--fw-semibold);
   border-radius: var(--radius-full);
-  border: 1.5px solid var(--color-cta);
+  border: 1.5px solid var(--color-primary);
   cursor: pointer;
   transition: all var(--transition-fast);
   white-space: nowrap;
-  background: var(--color-cta);
+  background: var(--color-primary);
   color: white;
-  box-shadow: 0 3px 10px rgba(239, 108, 0, 0.25);
+  box-shadow: 0 3px 10px rgba(79, 70, 229, 0.25);
 }
 
 .modalBtnPrimary:hover:not(:disabled) {
-  background: var(--color-cta-hover);
-  border-color: var(--color-cta-hover);
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
   transform: translateY(-1px);
 }
 
@@ -477,7 +629,7 @@
 .modalBody {
   flex: 1;
   min-height: 0;
-  background: #e0e0e0;
+  background: var(--color-bg-soft);
   overflow: hidden;
 }
 

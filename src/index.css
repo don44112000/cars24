@@ -1,16 +1,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-/* ── Design System Tokens ── */
+/* ── Design System Tokens (Cars24 2026 inspired) ── */
 :root {
-  /* Colors — Cars24 inspired */
-  --color-primary: #0057FF;
-  --color-primary-light: #E8F0FE;
-  --color-primary-dark: #0041CC;
-  --color-primary-50: #EEF4FF;
-  --color-cta: #EF6C00;
-  --color-cta-hover: #E65100;
-  --color-cta-light: #FFF3E0;
+  /* Brand — vivid indigo */
+  --color-primary: #4F46E5;
+  --color-primary-hover: #4338CA;
+  --color-primary-dark: #3730A3;
+  --color-primary-deep: #312E81;
+  --color-primary-50: #EEF2FF;
+  --color-primary-100: #E0E7FF;
+  --color-primary-200: #C7D2FE;
+  --color-primary-light: #EEF2FF;
 
+  /* Header strip */
+  --color-header-strip: #3730A3;
+  --color-header: #4F46E5;
+
+  /* Legacy CTA aliases — point to the new primary so older refs keep working */
+  --color-cta: #4F46E5;
+  --color-cta-hover: #4338CA;
+  --color-cta-light: #EEF2FF;
+
+  /* Accent — red for "deal" badges */
+  --color-accent: #DC2626;
+  --color-accent-bg: #FEE2E2;
+
+  /* Surfaces */
+  --color-bg: #FFFFFF;
+  --color-bg-soft: #F8F9FB;
+  --color-surface: #FFFFFF;
+  --color-surface-soft: #F4F5F9;
+  --color-surface-dark: #0F172A;
+  --color-footer-bg: #0A0F1E;
+
+  /* Text */
+  --color-text: #111827;
+  --color-text-secondary: #4B5563;
+  --color-text-muted: #9CA3AF;
+  --color-text-on-primary: #FFFFFF;
+
+  /* Borders */
+  --color-border: #E5E7EB;
+  --color-border-light: #F3F4F6;
+  --color-divider: #EAEDF2;
+
+  /* Status colors (legacy — kept for wizard/checklist) */
   --color-critical: #D32F2F;
   --color-critical-bg: #FFEBEE;
   --color-important: #F9A825;
@@ -22,14 +56,13 @@
   --color-success: #2E7D32;
   --color-success-bg: #E8F5E9;
 
-  --color-bg: #F5F7FA;
-  --color-surface: #FFFFFF;
-  --color-text: #1A1A2E;
-  --color-text-secondary: #6B7280;
-  --color-text-muted: #9CA3AF;
-  --color-border: #E5E7EB;
-  --color-border-light: #F0F0F5;
-  --color-divider: #EAEDF2;
+  /* Categorical service tints */
+  --c-blue-bg: #E8F2FF;     --c-blue-fg: #1A52A8;
+  --c-green-bg: #EAF5EC;    --c-green-fg: #1A6B2A;
+  --c-amber-bg: #FFF4E0;    --c-amber-fg: #A3620A;
+  --c-purple-bg: #F3EEFF;   --c-purple-fg: #6B3FA0;
+  --c-pink-bg: #FFE9F0;     --c-pink-fg: #B5285A;
+  --c-teal-bg: #DEF7F2;     --c-teal-fg: #0E6E64;
 
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -40,10 +73,9 @@
   --font-size-xl: 1.25rem;
   --font-size-2xl: 1.5rem;
   --font-size-3xl: 2rem;
-  --font-size-4xl: 2.5rem;
-  --font-size-hero: 3.25rem;
+  --font-size-4xl: 2.75rem;
+  --font-size-hero: 3.75rem;
 
-  /* Font weights */
   --fw-light: 300;
   --fw-regular: 400;
   --fw-medium: 500;
@@ -51,7 +83,7 @@
   --fw-bold: 700;
   --fw-extrabold: 800;
 
-  /* Spacing */
+  /* Spacing (8pt) */
   --space-2xs: 0.125rem;
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
@@ -69,29 +101,52 @@
   --radius-lg: 16px;
   --radius-xl: 20px;
   --radius-2xl: 24px;
+  --radius-3xl: 32px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.10);
-  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
-  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.06);
-  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.10);
+  /* Shadows — Cars24 prefers very soft / hairline borders over strong shadows */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 1px 4px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 10px 28px rgba(15, 23, 42, 0.08);
+  --shadow-xl: 0 18px 44px rgba(15, 23, 42, 0.12);
+  --shadow-card: 0 2px 10px rgba(15, 23, 42, 0.05);
+  --shadow-strip: 0 12px 32px rgba(15, 23, 42, 0.10);
 
   /* Layout */
   --max-width: 1200px;
   --max-width-narrow: 800px;
-  --header-height: 64px;
+  --header-strip-height: 32px;
+  --header-main-height: 64px;
+  --header-height: 96px;
 
   /* Transitions */
   --transition-fast: 150ms ease;
-  --transition-normal: 250ms ease;
+  --transition-normal: 220ms ease;
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Focus rings (WCAG 2.4.7) */
+  --focus-ring: 0 0 0 3px rgba(79, 70, 229, 0.35);
+  --focus-ring-critical: 0 0 0 3px rgba(211, 47, 47, 0.30);
+  --focus-ring-on-dark: 0 0 0 3px rgba(255, 255, 255, 0.55);
+
+  /* Disabled state */
+  --opacity-disabled: 0.6;
 }
 
-/* ── Global Reset ── */
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Reset ── */
 *,
 *::before,
 *::after {
@@ -128,7 +183,7 @@ a {
   transition: color var(--transition-fast);
 }
 a:hover {
-  color: var(--color-primary-dark);
+  color: var(--color-primary-hover);
 }
 
 button {
@@ -144,11 +199,12 @@ input, textarea, select {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  line-height: 1.2;
+  line-height: 1.15;
   font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
 }
 
-/* ── Utility Classes ── */
+/* ── Utilities ── */
 .container {
   width: 100%;
   max-width: var(--max-width);
@@ -172,6 +228,30 @@ h1, h2, h3, h4, h5, h6 {
   border-width: 0;
 }
 
+/* Skip link — visually hidden until focused */
+.skip-link {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  z-index: 200;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--fw-semibold);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-200%);
+  transition: transform var(--transition-fast);
+}
+.skip-link:focus {
+  transform: translateY(0);
+  color: var(--color-text-on-primary);
+  outline: none;
+  box-shadow: var(--focus-ring), var(--shadow-md);
+}
+
 /* ── App Layout ── */
 #root {
   min-height: 100vh;
@@ -182,6 +262,11 @@ h1, h2, h3, h4, h5, h6 {
 .page-content {
   flex: 1;
   padding-top: var(--header-height);
+}
+
+/* Pages whose hero extends behind the header opt out via this class */
+.page-content--flush {
+  padding-top: 0;
 }
 
 /* ── Scrollbar ── */
@@ -199,8 +284,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-text-muted);
 }
 
-/* ── Selection ── */
 ::selection {
-  background: var(--color-primary-light);
+  background: var(--color-primary-100);
   color: var(--color-primary-dark);
 }

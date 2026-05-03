@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, Tag, ArrowRight } from 'lucide-react';
 import type { UserRole, ScenarioFlags } from '../../types/checklist';
 import { useChecklistStore } from '../../store/checklistStore';
+import { formatRegNo, isValidRegNo, stripRegNo } from '../../components/FormShared';
 import styles from './WizardSetup.module.css';
 
 export default function WizardSetup() {
@@ -25,9 +26,15 @@ export default function WizardSetup() {
     },
   );
 
+  const regStripped = stripRegNo(regNo);
+  const regTouched = regStripped.length > 0;
+  const regValid = isValidRegNo(regNo);
+  const regError = regTouched && !regValid;
+
   const handleContinue = () => {
     if (!role) return;
-    const cleaned = regNo.trim().toUpperCase();
+    if (regError) return;
+    const cleaned = regTouched ? formatRegNo(regNo) : '';
     if (activeSession) {
       // resume / update
       setScenarioFlags(flags);
@@ -90,12 +97,28 @@ export default function WizardSetup() {
         <div className={styles.label}>Vehicle registration number (optional)</div>
         <input
           type="text"
-          className={styles.input}
+          inputMode="text"
+          autoComplete="off"
+          autoCapitalize="characters"
+          spellCheck={false}
+          className={`${styles.input} ${regError ? styles.inputError : ''}`}
           placeholder="MH 12 AB 1234"
           value={regNo}
-          onChange={(e) => setRegNo(e.target.value)}
-          maxLength={15}
+          onChange={(e) => setRegNo(formatRegNo(e.target.value))}
+          maxLength={13}
+          aria-invalid={regError}
         />
+        {regError ? (
+          <span className={styles.inputErrorMsg}>
+            Use the AA NN AA NNNN format — e.g. MH 12 AB 1234.
+          </span>
+        ) : regTouched && regValid ? (
+          <span className={styles.inputHelpOk}>Looks good.</span>
+        ) : (
+          <span className={styles.inputHelp}>
+            Optional — leave blank or use 2 letters · 2 digits · 2 letters · 4 digits.
+          </span>
+        )}
 
         <div className={styles.label}>Vehicle situation</div>
         <div className={styles.flags}>
@@ -155,7 +178,7 @@ export default function WizardSetup() {
           <button
             className={styles.continueBtn}
             onClick={handleContinue}
-            disabled={!role}
+            disabled={!role || regError}
           >
             Continue to Verify <ArrowRight size={16} />
           </button>

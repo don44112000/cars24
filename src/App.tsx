@@ -19,8 +19,9 @@ import WizardResults from './pages/Wizard/WizardResults';
 export default function App() {
   return (
     <BrowserRouter>
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <Header />
-      <main className="page-content">
+      <main id="main-content" className="page-content" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<Landing />} />
           {/* Standalone routes — preserved for independent feature use */}

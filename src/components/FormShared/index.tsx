@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Check, Calendar, Printer, X, Eye } from 'lucide-react';
+import { ChevronDown, Check, Calendar, Printer, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
 import { buildFormUrl, FORM_META, type FormId, type WizardAnswers } from '../../data/formGenerator';
 import styles from './FormShared.module.css';
 
@@ -134,9 +134,9 @@ export function RegNoField({
         aria-label={label}
       />
       {error ? (
-        <span className={styles.fieldError}>{error}</span>
+        <span className={styles.fieldError} role="alert" aria-live="polite">{error}</span>
       ) : value && valid ? (
-        <span className={styles.fieldHelpOk}>Looks good — AA NN AA NNNN format.</span>
+        <span className={styles.fieldHelpOk} aria-live="polite">Looks good — AA NN AA NNNN format.</span>
       ) : (
         <span className={styles.fieldHelp}>Format: 2 letters · 2 digits · 2 letters · 4 digits</span>
       )}
@@ -203,7 +203,7 @@ export function NumberField({
           onChange(maxLength ? next.slice(0, maxLength) : next);
         }}
       />
-      {error && <span className={styles.fieldError}>{error}</span>}
+      {error && <span className={styles.fieldError} role="alert" aria-live="polite">{error}</span>}
     </label>
   );
 }
@@ -375,6 +375,143 @@ export function Combobox({
   );
 }
 
+// ─────────────────────────── Calendar (custom popup) ───────────────────────────
+
+const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONTHS_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const WEEKDAYS = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+
+function parseDmy(dmy: string): Date | null {
+  if (!dmy) return null;
+  const [d, m, y] = dmy.split('/');
+  if (!d || !m || !y) return null;
+  const date = new Date(Number(y), Number(m) - 1, Number(d));
+  return isNaN(date.getTime()) ? null : date;
+}
+
+function formatDmy(date: Date): string {
+  const d = String(date.getDate()).padStart(2, '0');
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const y = String(date.getFullYear());
+  return `${d}/${m}/${y}`;
+}
+
+function sameDay(a: Date | null, b: Date | null): boolean {
+  if (!a || !b) return false;
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+
+function CalendarPopup({
+  value,
+  onSelect,
+  onClose,
+}: {
+  value: string;
+  onSelect: (v: string) => void;
+  onClose: () => void;
+}) {
+  const today = useMemo(() => {
+    const t = new Date();
+    return new Date(t.getFullYear(), t.getMonth(), t.getDate());
+  }, []);
+  const selected = useMemo(() => parseDmy(value), [value]);
+  const [view, setView] = useState<Date>(() => {
+    const base = selected ?? today;
+    return new Date(base.getFullYear(), base.getMonth(), 1);
+  });
+
+  // Build a 6-week grid (42 cells) starting from Monday
+  const cells = useMemo(() => {
+    const firstDay = new Date(view.getFullYear(), view.getMonth(), 1);
+    // 0=Sun ... 6=Sat. We want Monday-first: shift so Mo=0.
+    const offset = (firstDay.getDay() + 6) % 7;
+    const start = new Date(firstDay);
+    start.setDate(firstDay.getDate() - offset);
+    const out: Date[] = [];
+    for (let i = 0; i < 42; i++) {
+      const d = new Date(start);
+      d.setDate(start.getDate() + i);
+      out.push(d);
+    }
+    return out;
+  }, [view]);
+
+  const goPrev = () => setView(new Date(view.getFullYear(), view.getMonth() - 1, 1));
+  const goNext = () => setView(new Date(view.getFullYear(), view.getMonth() + 1, 1));
+
+  const pick = (d: Date) => {
+    onSelect(formatDmy(d));
+    onClose();
+  };
+
+  return (
+    <motion.div
+      className={styles.calPopup}
+      initial={{ opacity: 0, y: -6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.12 }}
+      role="dialog"
+      aria-label="Choose a date"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className={styles.calHead}>
+        <button type="button" className={styles.calNav} onClick={goPrev} aria-label="Previous month">
+          <ChevronLeft size={16} />
+        </button>
+        <div className={styles.calTitle}>
+          {MONTHS_FULL[view.getMonth()]} {view.getFullYear()}
+        </div>
+        <button type="button" className={styles.calNav} onClick={goNext} aria-label="Next month">
+          <ChevronRight size={16} />
+        </button>
+      </div>
+      <div className={styles.calWeek}>
+        {WEEKDAYS.map((w) => (
+          <span key={w} className={styles.calWeekDay}>{w}</span>
+        ))}
+      </div>
+      <div className={styles.calGrid}>
+        {cells.map((d) => {
+          const inMonth = d.getMonth() === view.getMonth();
+          const isToday = sameDay(d, today);
+          const isSelected = sameDay(d, selected);
+          return (
+            <button
+              key={d.toISOString()}
+              type="button"
+              className={[
+                styles.calCell,
+                !inMonth ? styles.calCellOutside : '',
+                isToday ? styles.calCellToday : '',
+                isSelected ? styles.calCellSelected : '',
+              ].filter(Boolean).join(' ')}
+              onClick={() => pick(d)}
+            >
+              {d.getDate()}
+            </button>
+          );
+        })}
+      </div>
+      <div className={styles.calFoot}>
+        <button
+          type="button"
+          className={styles.calFootBtn}
+          onClick={() => pick(today)}
+        >
+          Today
+        </button>
+        <button
+          type="button"
+          className={styles.calFootBtn}
+          onClick={() => { onSelect(''); onClose(); }}
+        >
+          Clear
+        </button>
+      </div>
+    </motion.div>
+  );
+}
+
 // ─────────────────────────── DateField ───────────────────────────
 
 export function DateField({
@@ -388,60 +525,55 @@ export function DateField({
   onChange: (v: string) => void;
   full?: boolean;
 }) {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
 
-  const toIso = (dmy: string): string => {
-    const [d, m, y] = (dmy || '').split('/');
-    if (!d || !m || !y) return '';
-    return `${y.padStart(4, '0')}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
-  };
-  const fromIso = (iso: string): string => {
-    const [y, m, d] = (iso || '').split('-');
-    if (!y || !m || !d) return '';
-    return `${d}/${m}/${y}`;
-  };
-
-  const openPicker = () => {
-    const el = inputRef.current;
-    if (!el) return;
-    type WithShowPicker = HTMLInputElement & { showPicker?: () => void };
-    const withPicker = el as WithShowPicker;
-    if (typeof withPicker.showPicker === 'function') {
-      try { withPicker.showPicker(); return; } catch { /* fallthrough */ }
-    }
-    el.focus();
-    el.click();
-  };
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => {
+      if (!wrapRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('mousedown', onDoc);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDoc);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
 
   return (
     <label className={`${styles.field} ${full ? styles.fieldFull : ''}`}>
       <span className={styles.fieldLabel}>{label}</span>
-      <div
-        className={styles.dateField}
-        onClick={openPicker}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPicker(); }
-        }}
-      >
-        <span className={value ? styles.dateValue : styles.datePlaceholder}>
-          {value || 'dd/mm/yyyy'}
-        </span>
-        <Calendar size={16} className={styles.dateIcon} />
-        <input
-          ref={inputRef}
-          type="date"
-          className={styles.dateNative}
-          value={toIso(value)}
-          onChange={(e) => onChange(fromIso(e.target.value))}
-          aria-label={label}
-          tabIndex={-1}
-        />
+      <div className={styles.dateFieldWrap} ref={wrapRef}>
+        <button
+          type="button"
+          className={`${styles.dateField} ${open ? styles.dateFieldOpen : ''}`}
+          onClick={() => setOpen((o) => !o)}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+        >
+          <span className={value ? styles.dateValue : styles.datePlaceholder}>
+            {value || 'dd / mm / yyyy'}
+          </span>
+          <Calendar size={16} className={styles.dateIcon} />
+        </button>
+        {open && (
+          <CalendarPopup
+            value={value}
+            onSelect={onChange}
+            onClose={() => setOpen(false)}
+          />
+        )}
       </div>
     </label>
   );
 }
+
+// Re-export for documentation completeness
+export { MONTHS_SHORT };
 
 // ─────────────────────────── ToggleRow ───────────────────────────
 
@@ -500,14 +632,22 @@ export function FormFillModal({
   canPreview?: boolean;
 }) {
   const meta = FORM_META[formId];
+  const titleId = useId();
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const previousFocus = document.activeElement as HTMLElement | null;
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
+    const focusTimer = window.setTimeout(() => {
+      dialogRef.current?.focus();
+    }, 0);
     return () => {
+      window.clearTimeout(focusTimer);
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = '';
+      previousFocus?.focus?.();
     };
   }, [onClose]);
 
@@ -521,17 +661,22 @@ export function FormFillModal({
       transition={{ duration: 0.18 }}
     >
       <motion.div
+        ref={dialogRef}
         className={`${styles.modal} ${styles.fillModal}`}
         onClick={(e) => e.stopPropagation()}
         initial={{ opacity: 0, scale: 0.96, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 20 }}
         transition={{ duration: 0.22 }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        tabIndex={-1}
       >
         <header className={styles.modalHeader}>
           <div className={styles.modalTitleWrap}>
             <span className={styles.modalBadge}>{meta.title}</span>
-            <span className={styles.modalSubtitle}>{title ?? meta.subtitle}</span>
+            <span id={titleId} className={styles.modalSubtitle}>{title ?? meta.subtitle}</span>
           </div>
           <div className={styles.modalActions}>
             <button
@@ -577,14 +722,22 @@ export function PreviewModal({
   const meta = FORM_META[formId];
   const url = buildFormUrl(formId, answers);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
 
   useEffect(() => {
+    const previousFocus = document.activeElement as HTMLElement | null;
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
+    const focusTimer = window.setTimeout(() => {
+      dialogRef.current?.focus();
+    }, 0);
     return () => {
+      window.clearTimeout(focusTimer);
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = '';
+      previousFocus?.focus?.();
     };
   }, [onClose]);
 
@@ -600,17 +753,22 @@ export function PreviewModal({
       transition={{ duration: 0.18 }}
     >
       <motion.div
+        ref={dialogRef}
         className={styles.modal}
         onClick={(e) => e.stopPropagation()}
         initial={{ opacity: 0, scale: 0.96, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 20 }}
         transition={{ duration: 0.22 }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        tabIndex={-1}
       >
         <header className={styles.modalHeader}>
           <div className={styles.modalTitleWrap}>
             <span className={styles.modalBadge}>{meta.title}</span>
-            <span className={styles.modalSubtitle}>{meta.subtitle}</span>
+            <span id={titleId} className={styles.modalSubtitle}>{meta.subtitle}</span>
           </div>
           <div className={styles.modalActions}>
             <button

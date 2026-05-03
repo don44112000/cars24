@@ -95,7 +95,7 @@
 }
 .statusPillStop { background: #fef2f2; color: #dc2626; }
 .statusPillReady { background: #ecfdf5; color: #047857; }
-.statusPillProgress { background: #eff6ff; color: #1d4ed8; }
+.statusPillProgress { background: var(--color-primary-50); color: var(--color-primary-dark); }
 
 .flagBits {
   display: inline-flex;

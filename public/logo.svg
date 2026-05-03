@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="48" viewBox="0 0 200 48" fill="none">
+  <defs>
+    <linearGradient id="rcrBgLk" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1"/>
+      <stop offset="0.55" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#3730A3"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="48" height="48" rx="12" fill="url(#rcrBgLk)"/>
+  <path
+    d="M14 25l6.5 6.5L34 18"
+    stroke="#FFFFFF"
+    stroke-width="4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+  <text
+    x="60"
+    y="32"
+    font-family="Inter, system-ui, sans-serif"
+    font-size="24"
+    font-weight="800"
+    letter-spacing="-0.6"
+    fill="#111827"
+  >RC<tspan fill="#4F46E5">Ready</tspan></text>
+</svg>

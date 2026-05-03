@@ -1,15 +1,15 @@
 .page {
-  min-height: calc(100vh - 64px);
-  background: var(--color-bg);
+  min-height: calc(100vh - var(--header-height));
+  background: var(--color-bg-soft);
 }
 
 .stepper {
   position: sticky;
-  top: 64px;
+  top: var(--header-height);
   z-index: 10;
-  background: var(--color-surface, #fff);
-  border-bottom: 1px solid var(--color-border, #e5e7eb);
-  padding: 14px 24px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-light);
+  padding: 16px 24px;
 }
 
 .stepperInner {
@@ -17,7 +17,7 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .stepperTopRow {
@@ -28,9 +28,9 @@
 }
 
 .stepperTitle {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-text, #1f2937);
+  font-size: var(--font-size-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -40,24 +40,24 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: var(--color-primary-light, #eff6ff);
-  color: var(--color-primary, #1d4ed8);
-  padding: 3px 9px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 600;
+  background: var(--color-primary-50);
+  color: var(--color-primary-dark);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--fw-bold);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.06em;
 }
 
 .stepperMeta {
-  font-size: 12px;
-  color: var(--color-text-secondary, #6b7280);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
 }
 
 .stepperMetaStrong {
-  color: var(--color-text, #1f2937);
-  font-weight: 600;
+  color: var(--color-text);
+  font-weight: var(--fw-semibold);
 }
 
 .steps {
@@ -71,29 +71,33 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
-  padding: 8px 10px;
-  border-radius: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
   border: 1px solid transparent;
   background: transparent;
   cursor: pointer;
   text-align: left;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
   font-family: inherit;
 }
-.step:hover {
-  background: var(--color-bg-secondary, #f9fafb);
+.step:hover:not(:disabled) {
+  background: var(--color-bg-soft);
 }
 .step:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 .stepActive {
-  background: var(--color-primary-light, #eff6ff);
-  border-color: var(--color-primary, #1d4ed8);
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-200);
 }
+.stepActive:hover {
+  background: var(--color-primary-50);
+}
+
 .stepDone {
-  background: var(--color-success-bg, #ecfdf5);
+  background: rgba(46, 125, 50, 0.06);
 }
 
 .stepHeader {
@@ -110,44 +114,44 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--color-bg-secondary, #f3f4f6);
-  color: var(--color-text-secondary, #6b7280);
-  font-size: 11px;
-  font-weight: 700;
+  background: var(--color-border-light);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--fw-bold);
   flex-shrink: 0;
 }
 .stepActive .stepNum {
-  background: var(--color-primary, #1d4ed8);
-  color: white;
+  background: var(--color-primary);
+  color: #ffffff;
 }
 .stepDone .stepNum {
-  background: var(--color-success, #10b981);
-  color: white;
+  background: var(--color-success);
+  color: #ffffff;
 }
 
 .stepLabel {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-text, #1f2937);
+  font-size: var(--font-size-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text);
 }
 
 .stepSub {
   font-size: 10.5px;
-  color: var(--color-text-secondary, #6b7280);
-  font-weight: 500;
+  color: var(--color-text-muted);
+  font-weight: var(--fw-medium);
 }
 
 .progressBar {
   height: 4px;
-  background: var(--color-bg-secondary, #f3f4f6);
-  border-radius: 999px;
+  background: var(--color-border-light);
+  border-radius: var(--radius-full);
   overflow: hidden;
 }
 .progressBarFill {
   height: 100%;
-  background: var(--color-primary, #1d4ed8);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
   transition: width 0.4s ease;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
 }
 
 .empty {
@@ -155,35 +159,47 @@
   margin: 80px auto;
   text-align: center;
   padding: 48px 24px;
-  background: var(--color-surface, #fff);
-  border-radius: 12px;
-  border: 1px solid var(--color-border, #e5e7eb);
+  background: var(--color-surface);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-card);
 }
 
 .emptyTitle {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -0.02em;
   margin: 0 0 8px;
 }
 .emptyDesc {
-  color: var(--color-text-secondary, #6b7280);
+  color: var(--color-text-secondary);
   margin: 0 0 24px;
-  font-size: 14px;
+  font-size: var(--font-size-base);
+  line-height: 1.6;
 }
 .emptyCta {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 20px;
-  background: var(--color-primary, #1d4ed8);
-  color: white;
-  border-radius: 8px;
+  padding: 12px 22px;
+  background: var(--color-primary);
+  color: #ffffff;
+  border-radius: var(--radius-full);
   text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: var(--fw-semibold);
+  font-size: var(--font-size-sm);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+.emptyCta:hover {
+  color: #ffffff;
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {
+  .stepper {
+    padding: 12px 16px;
+  }
   .steps {
     grid-template-columns: repeat(5, 1fr);
     gap: 3px;
@@ -196,5 +212,8 @@
   }
   .stepSub {
     display: none;
+  }
+  .stepperTopRow {
+    flex-wrap: wrap;
   }
 }
