@@ -14,6 +14,15 @@
     "ownership-transfer"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/don44112000/Rc-Ready#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/don44112000/Rc-Ready.git"
+  },
+  "bugs": {
+    "url": "https://github.com/don44112000/Rc-Ready/issues"
+  },
+  "author": "don44112000",
   "type": "module",
   "scripts": {
     "dev": "vite",

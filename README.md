@@ -1,5 +1,12 @@
 # RC Ready
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/don44112000/Rc-Ready?style=social)](https://github.com/don44112000/Rc-Ready)
+[![GitHub issues](https://img.shields.io/github/issues/don44112000/Rc-Ready)](https://github.com/don44112000/Rc-Ready/issues)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/don44112000/Rc-Ready/pulls)
+
+> **Repository:** [github.com/don44112000/Rc-Ready](https://github.com/don44112000/Rc-Ready)
+
 **A free, guided companion for transferring car ownership in Maharashtra — the right way, without the runaround.**
 
 Buying or selling a used car in India should be exciting, not stressful. But the RC (Registration Certificate) transfer process is buried under decades of rules, paperwork, and RTO jargon. Miss one document, get one form wrong, and you're stuck — or worse, legally liable for a car that's no longer yours.
@@ -207,6 +214,10 @@ You can contribute by:
 - Sharing it with someone about to buy or sell a used car
 
 Open an issue, send a pull request, or just send feedback. Every contribution makes the next person's transfer a little less painful.
+
+- **Report a bug or suggest an improvement:** [github.com/don44112000/Rc-Ready/issues](https://github.com/don44112000/Rc-Ready/issues)
+- **Submit a pull request:** [github.com/don44112000/Rc-Ready/pulls](https://github.com/don44112000/Rc-Ready/pulls)
+- **Star the project** if it helped you — it helps others find it: [github.com/don44112000/Rc-Ready](https://github.com/don44112000/Rc-Ready)
 
 ---
 
