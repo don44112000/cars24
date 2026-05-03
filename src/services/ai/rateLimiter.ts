@@ -1,19 +1,19 @@
 /**
- * Client-side rate limiter for Gemini calls.
+ * Client-side rate limiter for AI extraction calls.
  *
- * Gemini's free tier caps you at a fixed number of requests per minute
- * (RPM). When the user uploads many documents and clicks Extract, we'd
- * otherwise fire all 9 calls within a few hundred milliseconds. That's fine
- * at 9 calls but blows up if they retry rapidly or have multiple windows
- * open.
+ * The AI provider's free tier caps you at a fixed number of requests per
+ * minute (RPM). When the user uploads many documents and clicks Extract,
+ * we'd otherwise fire all 9 calls within a few hundred milliseconds. That's
+ * fine at 9 calls but blows up if they retry rapidly or have multiple
+ * windows open.
  *
  * This module enforces a rolling 60-second window. `acquireSlot()` resolves
  * immediately if there's room under the cap; otherwise it sleeps until the
  * oldest timestamp ages out. Calls are serialised through a chained promise
  * so the bookkeeping is consistent across concurrent callers.
  *
- * The cap is read from `VITE_GEMINI_RPM` (default 18 — leaves headroom
- * under the typical 20 RPM free-tier limit). Set it to your actual quota.
+ * The cap is read from `VITE_AI_RPM` (default 18 — leaves headroom under
+ * a typical 20 RPM free-tier limit). Set it to your actual quota.
  */
 
 const WINDOW_MS = 60_000;
@@ -25,7 +25,7 @@ let queue: Promise<void> = Promise.resolve();
 let extraCooldownUntil = 0;
 
 function getRpm(): number {
-  const fromEnv = import.meta.env.VITE_GEMINI_RPM;
+  const fromEnv = import.meta.env.VITE_AI_RPM;
   const n = Number(fromEnv);
   return Number.isFinite(n) && n > 0 ? n : DEFAULT_RPM;
 }

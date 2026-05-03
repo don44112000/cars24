@@ -1,4 +1,9 @@
 import type { ChecklistItem } from '../types/checklist';
+import {
+  evaluateInsuranceValid,
+  evaluateNoHypothecation,
+  evaluatePucValid,
+} from './autoEvaluators';
 
 export const sellerChecklist: ChecklistItem[] = [
   // ── PHASE 1: PRE-SALE PREPARATION ──
@@ -81,6 +86,7 @@ export const sellerChecklist: ChecklistItem[] = [
     requiresLoan: true,
     dependsOn: ['S-03'],
     applicableTo: ['seller'],
+    autoEvaluate: evaluateNoHypothecation,
   },
   {
     id: 'S-05',
@@ -119,6 +125,7 @@ export const sellerChecklist: ChecklistItem[] = [
     ],
     dependsOn: ['S-05'],
     applicableTo: ['seller'],
+    autoEvaluate: evaluatePucValid,
   },
   {
     id: 'S-07',
@@ -137,6 +144,7 @@ export const sellerChecklist: ChecklistItem[] = [
     ],
     dependsOn: ['S-06'],
     applicableTo: ['seller'],
+    autoEvaluate: evaluateInsuranceValid,
   },
 
   // ── PHASE 2: AT TIME OF SALE ──
@@ -173,6 +181,7 @@ export const sellerChecklist: ChecklistItem[] = [
     ],
     dependsOn: ['S-08'],
     applicableTo: ['seller'],
+    relatedForm: 'form29',
   },
   {
     id: 'S-10',
@@ -190,6 +199,7 @@ export const sellerChecklist: ChecklistItem[] = [
     ],
     dependsOn: ['S-09'],
     applicableTo: ['seller'],
+    relatedForm: 'form30',
   },
   {
     id: 'S-11',

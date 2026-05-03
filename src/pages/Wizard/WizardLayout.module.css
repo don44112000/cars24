@@ -1,0 +1,200 @@
+.page {
+  min-height: calc(100vh - 64px);
+  background: var(--color-bg);
+}
+
+.stepper {
+  position: sticky;
+  top: 64px;
+  z-index: 10;
+  background: var(--color-surface, #fff);
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+  padding: 14px 24px;
+}
+
+.stepperInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stepperTopRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.stepperTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text, #1f2937);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepperBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--color-primary-light, #eff6ff);
+  color: var(--color-primary, #1d4ed8);
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stepperMeta {
+  font-size: 12px;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.stepperMetaStrong {
+  color: var(--color-text, #1f2937);
+  font-weight: 600;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+.step:hover {
+  background: var(--color-bg-secondary, #f9fafb);
+}
+.step:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.stepActive {
+  background: var(--color-primary-light, #eff6ff);
+  border-color: var(--color-primary, #1d4ed8);
+}
+.stepDone {
+  background: var(--color-success-bg, #ecfdf5);
+}
+
+.stepHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-bg-secondary, #f3f4f6);
+  color: var(--color-text-secondary, #6b7280);
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.stepActive .stepNum {
+  background: var(--color-primary, #1d4ed8);
+  color: white;
+}
+.stepDone .stepNum {
+  background: var(--color-success, #10b981);
+  color: white;
+}
+
+.stepLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text, #1f2937);
+}
+
+.stepSub {
+  font-size: 10.5px;
+  color: var(--color-text-secondary, #6b7280);
+  font-weight: 500;
+}
+
+.progressBar {
+  height: 4px;
+  background: var(--color-bg-secondary, #f3f4f6);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progressBarFill {
+  height: 100%;
+  background: var(--color-primary, #1d4ed8);
+  transition: width 0.4s ease;
+  border-radius: 999px;
+}
+
+.empty {
+  max-width: 600px;
+  margin: 80px auto;
+  text-align: center;
+  padding: 48px 24px;
+  background: var(--color-surface, #fff);
+  border-radius: 12px;
+  border: 1px solid var(--color-border, #e5e7eb);
+}
+
+.emptyTitle {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+.emptyDesc {
+  color: var(--color-text-secondary, #6b7280);
+  margin: 0 0 24px;
+  font-size: 14px;
+}
+.emptyCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--color-primary, #1d4ed8);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .steps {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3px;
+  }
+  .step {
+    padding: 6px 4px;
+  }
+  .stepLabel {
+    font-size: 10px;
+  }
+  .stepSub {
+    display: none;
+  }
+}

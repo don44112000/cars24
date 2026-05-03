@@ -68,6 +68,51 @@
   margin-top: 2px;
 }
 
+.scoreChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #ecfdf5;
+  color: #047857;
+}
+.scoreChipAmber { background: #fffbeb; color: #b45309; }
+.scoreChipRed { background: #fef2f2; color: #b91c1c; }
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--color-bg-secondary, #f3f4f6);
+  color: var(--color-text-secondary, #6b7280);
+}
+.statusPillStop { background: #fef2f2; color: #dc2626; }
+.statusPillReady { background: #ecfdf5; color: #047857; }
+.statusPillProgress { background: #eff6ff; color: #1d4ed8; }
+
+.flagBits {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  margin-top: 4px;
+}
+.flagBit {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--color-text-muted, #9ca3af);
+}
+.flagBitRed { color: #dc2626; }
+.flagBitYellow { color: #b45309; }
+
 .sessionActions {
   display: flex;
   gap: var(--space-sm);

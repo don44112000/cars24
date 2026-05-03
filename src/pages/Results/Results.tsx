@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import {
   ArrowLeft, ArrowRight, RotateCcw, Printer, IndianRupee,
   Clock, FileText, AlertTriangle, CheckCircle2,
-  XCircle, MinusCircle, CircleDot, Sparkles, Wand2, Wrench,
+  Sparkles, Wand2, Wrench,
 } from 'lucide-react';
 import { useChecklist } from '../../hooks/useChecklist';
 import { useChecklistStore } from '../../store/checklistStore';

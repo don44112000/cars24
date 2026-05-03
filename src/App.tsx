@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Landing from './pages/Landing/Landing';
@@ -10,6 +10,11 @@ import History from './pages/History/History';
 import Help from './pages/Help/Help';
 import Forms from './pages/Forms/Forms';
 import Verify from './pages/Verify/Verify';
+import WizardLayout from './pages/Wizard/WizardLayout';
+import WizardSetup from './pages/Wizard/WizardSetup';
+import WizardVerify from './pages/Wizard/WizardVerify';
+import WizardForms from './pages/Wizard/WizardForms';
+import WizardResults from './pages/Wizard/WizardResults';
 
 export default function App() {
   return (
@@ -18,6 +23,7 @@ export default function App() {
       <main className="page-content">
         <Routes>
           <Route path="/" element={<Landing />} />
+          {/* Standalone routes — preserved for independent feature use */}
           <Route path="/start" element={<Start />} />
           <Route path="/check" element={<Check />} />
           <Route path="/results" element={<Results />} />
@@ -26,6 +32,16 @@ export default function App() {
           <Route path="/verify" element={<Verify />} />
           <Route path="/history" element={<History />} />
           <Route path="/help" element={<Help />} />
+
+          {/* Merged wizard — orchestrates the three features */}
+          <Route path="/wizard" element={<WizardLayout />}>
+            <Route index element={<Navigate to="/wizard/setup" replace />} />
+            <Route path="setup" element={<WizardSetup />} />
+            <Route path="verify" element={<WizardVerify />} />
+            <Route path="check" element={<Check />} />
+            <Route path="forms" element={<WizardForms />} />
+            <Route path="results" element={<WizardResults />} />
+          </Route>
         </Routes>
       </main>
       <Footer />

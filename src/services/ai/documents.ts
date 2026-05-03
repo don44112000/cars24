@@ -1,10 +1,10 @@
 /**
- * Document descriptors used for image extraction via Gemini.
+ * Document descriptors used for image extraction via the AI service.
  *
  * Each descriptor carries:
  *   - a tight extraction prompt asking ONLY for the fields needed for
  *     cross-checks defined in docs/docCheckList.md
- *   - a JSON Schema (Gemini `responseSchema`) that forces structured output
+ *   - a JSON Schema (`responseSchema`) that forces structured output
  *   - a TS type describing the resulting object
  *   - the list of fields we treat as REQUIRED (image must show them clearly)
  *   - the canonical `documentTypeDetected` value the model should return for
@@ -149,7 +149,7 @@ export interface ExtractedByDoc {
   serviceBook: ServiceBookFields;
 }
 
-/* ---------- Gemini responseSchema (OpenAPI subset) ---------- */
+/* ---------- AI responseSchema (OpenAPI subset) ---------- */
 
 type SchemaType = 'OBJECT' | 'STRING' | 'NUMBER' | 'INTEGER' | 'BOOLEAN' | 'ARRAY';
 

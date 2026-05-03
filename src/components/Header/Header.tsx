@@ -22,7 +22,7 @@ export default function Header() {
               `${styles.navLink} ${isActive ? styles.active : ''}`
             }
           >
-            Generate Forms
+            Forms
           </NavLink>
           <NavLink
             to="/documents"
@@ -38,7 +38,7 @@ export default function Header() {
               `${styles.navLink} ${isActive ? styles.active : ''}`
             }
           >
-            Verify Docs
+            Verify
           </NavLink>
           <NavLink
             to="/history"
@@ -56,8 +56,8 @@ export default function Header() {
           >
             Help
           </NavLink>
-          <Link to="/start" className={styles.startBtn}>
-            Start Check
+          <Link to="/wizard/setup" className={styles.startBtn}>
+            Run Wizard
           </Link>
         </nav>
       </div>

@@ -3,16 +3,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowRight, ArrowLeft, ShoppingCart, Tag, Banknote, Gavel, Scale,
   Car, User, Users, Building2, FileText, Eye, Check,
-  Sparkles, MessageCircle,
+  Sparkles, MessageCircle, Calendar,
 } from 'lucide-react';
 import {
   Bubble, Field, RegNoField, NumberField, Combobox, DateField, ToggleRow, PreviewModal,
-  isValidRegNo, isValidMobile, isValidAge, formatRegNo,
+  isValidRegNo, isValidMobile, isValidAge,
 } from '../../components/FormShared';
 import {
   emptyAnswers,
   recommendForms,
-  buildFormUrl,
   FORM_META,
   type WizardAnswers,
   type Intent,

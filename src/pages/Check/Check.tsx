@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronDown, Check, X, Minus, ArrowRight, ArrowLeft,
@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import type { ChecklistItem, ItemStatus } from '../../types/checklist';
 import { useChecklist } from '../../hooks/useChecklist';
+import { useChecklistStore } from '../../store/checklistStore';
 import styles from './Check.module.css';
 
 type Mode = 'focus' | 'review';
@@ -356,10 +357,16 @@ function CompletionCard({
   ready,
   action,
   total,
+  nextHref,
+  nextLabel,
+  onContinue,
 }: {
   ready: number;
   action: number;
   total: number;
+  nextHref: string;
+  nextLabel: string;
+  onContinue?: () => void;
 }) {
   const allReady = action === 0;
   return (
@@ -381,8 +388,8 @@ function CompletionCard({
           ? `All ${total} items answered with no blockers — you're ready to proceed.`
           : `${ready} of ${total} ready · ${action} need attention before transfer.`}
       </p>
-      <Link to="/results" className={styles.doneCta}>
-        <FileText size={18} /> View Your Report <ArrowRight size={18} />
+      <Link to={nextHref} className={styles.doneCta} onClick={onContinue}>
+        <FileText size={18} /> {nextLabel} <ArrowRight size={18} />
       </Link>
     </motion.div>
   );
@@ -401,6 +408,12 @@ export default function CheckPage() {
     updateItemStatus,
     updateNote,
   } = useChecklist();
+
+  const location = useLocation();
+  const setCurrentStep = useChecklistStore((s) => s.setCurrentStep);
+  const inWizard = location.pathname.startsWith('/wizard');
+  const nextHref = inWizard ? '/wizard/forms' : '/results';
+  const nextLabel = inWizard ? 'Continue to Forms' : 'View Your Report';
 
   const [mode, setMode] = useState<Mode>('focus');
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -586,6 +599,11 @@ export default function CheckPage() {
                   ready={progress.yesCount + progress.naCount + progress.fixedCount}
                   action={progress.noCount}
                   total={flatItems.length}
+                  nextHref={nextHref}
+                  nextLabel={nextLabel}
+                  onContinue={() => {
+                    if (inWizard) setCurrentStep(4);
+                  }}
                 />
               ) : currentItem ? (
                 <FocusCard
@@ -621,12 +639,15 @@ export default function CheckPage() {
                     </span>
                   )}
                   <Link
-                    to="/results"
+                    to={nextHref}
                     className={`${styles.navReport} ${
                       progress.percentage > 50 ? styles.navReportReady : ''
                     }`}
+                    onClick={() => {
+                      if (inWizard) setCurrentStep(4);
+                    }}
                   >
-                    <FileText size={14} /> View Report
+                    <FileText size={14} /> {inWizard ? 'Continue' : 'View Report'}
                   </Link>
                 </div>
                 <button
@@ -662,8 +683,14 @@ export default function CheckPage() {
                 </span>
                 <span className={styles.reviewSummaryLbl}>Pending</span>
               </div>
-              <Link to="/results" className={styles.reviewReportBtn}>
-                <FileText size={14} /> View Report <ArrowRight size={14} />
+              <Link
+                to={nextHref}
+                className={styles.reviewReportBtn}
+                onClick={() => {
+                  if (inWizard) setCurrentStep(4);
+                }}
+              >
+                <FileText size={14} /> {inWizard ? 'Continue' : 'View Report'} <ArrowRight size={14} />
               </Link>
             </div>
 

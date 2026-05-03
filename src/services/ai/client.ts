@@ -1,5 +1,5 @@
 /**
- * Thin Gemini REST client used to extract structured fields from a document
+ * Thin Ai REST client used to extract structured fields from a document
  * image. We use Google's `generateContent` endpoint with `responseSchema` so
  * the model is forced to return JSON in the exact shape we asked for.
  *
@@ -30,7 +30,7 @@ const API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
  * https://ai.google.dev/api/generate-content. The v1beta endpoint also
  * accepts camelCase, but snake_case is the canonical form shown in the docs.
  */
-interface GeminiPart {
+interface AiPart {
   text?: string;
   inline_data?: {
     mime_type: string;
@@ -38,7 +38,7 @@ interface GeminiPart {
   };
 }
 
-interface GeminiResponse {
+interface AiResponse {
   candidates?: Array<{
     content?: { parts?: Array<{ text?: string }> };
     finishReason?: string;
@@ -47,9 +47,9 @@ interface GeminiResponse {
   error?: { message?: string };
 }
 
-export class GeminiConfigError extends Error {}
-export class GeminiCallError extends Error {}
-export class GeminiParseError extends Error {}
+export class AiConfigError extends Error {}
+export class AiCallError extends Error {}
+export class AiParseError extends Error {}
 
 /** Model said the image is a different document than the slot the user picked. */
 export class DocumentMismatchError extends Error {
@@ -72,16 +72,16 @@ export class LowQualityImageError extends Error {
 }
 
 function getConfig(): { apiKey: string; model: string } {
-  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-  const model = import.meta.env.VITE_GEMINI_MODEL;
+  const apiKey = import.meta.env.VITE_AI_API_KEY;
+  const model = import.meta.env.VITE_AI_MODEL;
   if (!apiKey) {
-    throw new GeminiConfigError(
-      'VITE_GEMINI_API_KEY is not set. Copy .env.example to .env and add your key.',
+    throw new AiConfigError(
+      'VITE_AI_API_KEY is not set. Copy .env.example to .env and add your key.',
     );
   }
   if (!model) {
-    throw new GeminiConfigError(
-      'VITE_GEMINI_MODEL is not set. Add it to .env (e.g. gemini-2.5-flash).',
+    throw new AiConfigError(
+      'VITE_AI_MODEL is not set. Add it to .env (e.g. your provider\'s vision model identifier).',
     );
   }
   return { apiKey, model };
@@ -102,7 +102,7 @@ async function fileToInlineData(file: File): Promise<{ mime_type: string; data: 
 }
 
 /**
- * Validate the parsed Gemini response against the slot's expectations.
+ * Validate the parsed Ai response against the slot's expectations.
  * Throws `DocumentMismatchError` or `LowQualityImageError` on disagreement.
  * Runs on every call (including cache hits) so the user always sees the
  * right error.
@@ -169,7 +169,7 @@ The object must have EXACTLY these keys with the types shown (use null for any f
 ${shape}`;
 }
 
-async function callGemini<K extends DocId>(
+async function callAi<K extends DocId>(
   descriptor: DocDescriptor<ExtractedByDoc[K]>,
   file: File,
   signal: AbortSignal | undefined,
@@ -177,13 +177,13 @@ async function callGemini<K extends DocId>(
   const { apiKey, model } = getConfig();
   const inlineData = await fileToInlineData(file);
 
-  const parts: GeminiPart[] = [
+  const parts: AiPart[] = [
     { text: buildJsonPrompt(descriptor) },
     { inline_data: inlineData },
   ];
 
   // Prompt-based JSON: leave response_mime_type as text/plain (the default
-  // for Gemini) and rely on the prompt to specify the shape. No
+  // for Ai) and rely on the prompt to specify the shape. No
   // response_schema = no constrained decoding.
   const body = {
     contents: [{ role: 'user', parts }],
@@ -214,38 +214,38 @@ async function callGemini<K extends DocId>(
     const retryAfter = Number(res.headers.get('retry-after')) || undefined;
     notifyRateLimited(retryAfter);
     if (attempt === maxAttempts) {
-      throw new GeminiCallError(
-        `Gemini rate limit hit (429). Try again in ${retryAfter ?? 'a few'} seconds, or lower your usage.`,
+      throw new AiCallError(
+        `Ai rate limit hit (429). Try again in ${retryAfter ?? 'a few'} seconds, or lower your usage.`,
       );
     }
   }
 
   if (!res || !res.ok) {
-    let message = `Gemini API error (${res?.status ?? 'no response'})`;
+    let message = `Ai API error (${res?.status ?? 'no response'})`;
     try {
-      const errBody = (await res!.json()) as GeminiResponse;
-      if (errBody.error?.message) message = `Gemini API error: ${errBody.error.message}`;
+      const errBody = (await res!.json()) as AiResponse;
+      if (errBody.error?.message) message = `Ai API error: ${errBody.error.message}`;
     } catch {
       /* ignore JSON parse error on error body */
     }
-    throw new GeminiCallError(message);
+    throw new AiCallError(message);
   }
 
-  const json = (await res.json()) as GeminiResponse;
+  const json = (await res.json()) as AiResponse;
   if (json.promptFeedback?.blockReason) {
-    throw new GeminiCallError(`Prompt blocked: ${json.promptFeedback.blockReason}`);
+    throw new AiCallError(`Prompt blocked: ${json.promptFeedback.blockReason}`);
   }
 
   const text = json.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!text) {
-    throw new GeminiParseError('Gemini returned an empty response.');
+    throw new AiParseError('Ai returned an empty response.');
   }
 
   const cleaned = stripCodeFences(text);
   try {
     return JSON.parse(cleaned) as ExtractedByDoc[K];
   } catch {
-    throw new GeminiParseError('Gemini response was not valid JSON.');
+    throw new AiParseError('Ai response was not valid JSON.');
   }
 }
 
@@ -279,7 +279,7 @@ export async function extractFromImage<K extends DocId>(
     return { data: cached, fromCache: true };
   }
 
-  const parsed = await callGemini<K>(descriptor, file, signal);
+  const parsed = await callAi<K>(descriptor, file, signal);
   setCachedRaw(docId, hash, parsed);
   validateExtraction(docId, descriptor, parsed);
   return { data: parsed, fromCache: false };

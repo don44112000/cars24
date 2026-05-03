@@ -1,4 +1,5 @@
 import type { ChecklistItem } from '../types/checklist';
+import { evaluateNoHypothecation } from './autoEvaluators';
 
 export const loanChecklist: ChecklistItem[] = [
   // ── STEP A: CONFIRM LOAN STATUS ──
@@ -20,6 +21,7 @@ export const loanChecklist: ChecklistItem[] = [
     ],
     requiresLoan: true,
     applicableTo: ['buyer', 'seller'],
+    autoEvaluate: evaluateNoHypothecation,
   },
   {
     id: 'L-02',
@@ -82,6 +84,7 @@ export const loanChecklist: ChecklistItem[] = [
     requiresLoan: true,
     dependsOn: ['L-03'],
     applicableTo: ['buyer', 'seller'],
+    relatedForm: 'form35',
   },
 
   // ── STEP B: HP TERMINATION AT THE RTO ──

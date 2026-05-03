@@ -13,7 +13,7 @@
  * persisting across browser sessions.
  */
 
-import { DOC_ORDER, type DocId } from '../../services/gemini/documents';
+import { DOC_ORDER, type DocId } from '../../services/ai/documents';
 
 const PREFIX = 'rcready:slot:v1:';
 

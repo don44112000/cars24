@@ -5,20 +5,20 @@ import {
   DOC_ORDER,
   type DocId,
   type ExtractedSet,
-} from '../../services/gemini/documents';
+} from '../../services/ai/documents';
 import {
   extractFromImage,
   DocumentMismatchError,
-  GeminiCallError,
-  GeminiConfigError,
-  GeminiParseError,
+  AiCallError,
+  AiConfigError,
+  AiParseError,
   LowQualityImageError,
-} from '../../services/gemini/client';
+} from '../../services/ai/client';
 import {
   runChecks,
   summarise,
   type CheckResult,
-} from '../../services/gemini/crossCheck';
+} from '../../services/ai/crossCheck';
 import {
   clearSlotStorage,
   emptySlot as initSlot,
@@ -27,6 +27,8 @@ import {
   type DocSlot,
   type DocSlotError,
 } from './slotStorage';
+import { useChecklistStore } from '../../store/checklistStore';
+import { factsFromExtraction } from '../../data/factsMapping';
 import styles from './Verify.module.css';
 
 type DocStatus = 'idle' | 'uploaded' | 'extracting' | 'extracted' | 'error';
@@ -124,6 +126,15 @@ export default function Verify() {
   const [running, setRunning] = useState(false);
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [checks, setChecks] = useState<CheckResult[]>([]);
+
+  // Wizard integration: when an active deal session exists, every successful
+  // extraction also writes facts + flags into the deal store so the smart
+  // checklist + form prefill light up. On standalone /verify with no session,
+  // these calls become no-ops (the selectors return null).
+  const activeSession = useChecklistStore((s) => s.activeSession);
+  const setExtractedDocs = useChecklistStore((s) => s.setExtractedDocs);
+  const setFacts = useChecklistStore((s) => s.setFacts);
+  const writeToDeal = !!activeSession;
 
   // Caches base64 of files we've already serialised, so re-saving on every
   // status change doesn't re-read the same file's bytes.
@@ -224,7 +235,13 @@ export default function Verify() {
         };
         (collected as Record<string, unknown>)[id] = outcome.data;
         setSlots({ ...next });
-        setChecks(runChecks(collected));
+        const flags = runChecks(collected);
+        setChecks(flags);
+        if (writeToDeal) {
+          setExtractedDocs(collected, flags);
+          const { facts } = factsFromExtraction(collected);
+          setFacts(facts, 'extracted');
+        }
       } catch (err) {
         let kind: ErrorKind = 'generic';
         let msg = 'Extraction failed.';
@@ -234,12 +251,12 @@ export default function Verify() {
         } else if (err instanceof LowQualityImageError) {
           kind = 'lowQuality';
           msg = err.message;
-        } else if (err instanceof GeminiConfigError) {
+        } else if (err instanceof AiConfigError) {
           kind = 'config';
           msg = err.message;
-        } else if (err instanceof GeminiCallError) {
+        } else if (err instanceof AiCallError) {
           msg = err.message;
-        } else if (err instanceof GeminiParseError) {
+        } else if (err instanceof AiParseError) {
           msg = err.message;
         } else if (err instanceof Error) {
           msg = err.message;
@@ -254,7 +271,13 @@ export default function Verify() {
       }
     }
 
-    setChecks(runChecks(collected));
+    const finalFlags = runChecks(collected);
+    setChecks(finalFlags);
+    if (writeToDeal) {
+      setExtractedDocs(collected, finalFlags);
+      const { facts } = factsFromExtraction(collected);
+      setFacts(facts, 'extracted');
+    }
     setRunning(false);
   };
 
@@ -265,7 +288,7 @@ export default function Verify() {
       <div className={styles.inner}>
         <h1 className={styles.title}>Document Verification</h1>
         <p className={styles.subtitle}>
-          Upload a clear photo of each document. Gemini extracts the fields,
+          Upload a clear photo of each document. The AI extracts the fields,
           and the cross-checks from the verification guide run automatically.
         </p>
 

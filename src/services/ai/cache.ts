@@ -1,5 +1,5 @@
 /**
- * Cache for Gemini extractions.
+ * Cache for AI extractions.
  *
  * Key = `${docId}:${sha256(fileBytes)}`. The hash is over the raw image
  * bytes, so the cache is invalidated automatically when the user replaces
@@ -13,13 +13,13 @@
  * right lifetime: the cache holds PII (names, Aadhaar last-4, PAN), and we
  * do NOT want that persisting across browser sessions.
  *
- * We cache the RAW parsed JSON from Gemini, not the validated result.
+ * We cache the RAW parsed JSON from the AI, not the validated result.
  * Validation (mismatch / low-quality detection) runs on every call so the
  * user always sees a proper error — but the API call itself happens at most
  * once per unique (docId, file) pair.
  */
 
-const STORAGE_KEY = 'rcready:gemini-cache:v1';
+const STORAGE_KEY = 'rcready:ai-cache:v1';
 
 function loadFromStorage(): Map<string, unknown> {
   if (typeof sessionStorage === 'undefined') return new Map();

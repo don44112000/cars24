@@ -52,8 +52,11 @@ export default function Landing() {
             in Maharashtra. Based on the Motor Vehicles Act 1988.
           </p>
           <div className={styles.heroCta}>
-            <Link to="/start" className={styles.btnPrimary}>
-              Start Free Check <ArrowRight size={18} />
+            <Link to="/wizard/setup" className={styles.btnPrimary}>
+              <Sparkles size={18} /> Run Full Wizard <ArrowRight size={18} />
+            </Link>
+            <Link to="/start" className={styles.btnSecondary}>
+              Just the Checklist
             </Link>
             <Link to="/documents" className={styles.btnSecondary}>
               <FileText size={18} /> View Documents

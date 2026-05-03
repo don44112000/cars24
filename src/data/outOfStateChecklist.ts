@@ -1,4 +1,9 @@
 import type { ChecklistItem } from '../types/checklist';
+import {
+  evaluateNoHypothecation,
+  evaluateOutOfState,
+  evaluateVahanCheck,
+} from './autoEvaluators';
 
 export const outOfStateChecklist: ChecklistItem[] = [
   // ── PHASE 1: PRE-CHECKS ──
@@ -16,6 +21,7 @@ export const outOfStateChecklist: ChecklistItem[] = [
     ],
     requiresOutOfState: true,
     applicableTo: ['buyer'],
+    autoEvaluate: evaluateOutOfState,
   },
   {
     id: 'O-02',
@@ -34,6 +40,7 @@ export const outOfStateChecklist: ChecklistItem[] = [
     requiresOutOfState: true,
     dependsOn: ['O-01'],
     applicableTo: ['buyer'],
+    autoEvaluate: evaluateVahanCheck,
   },
   {
     id: 'O-03',
@@ -55,6 +62,7 @@ export const outOfStateChecklist: ChecklistItem[] = [
     requiresOutOfState: true,
     dependsOn: ['O-02'],
     applicableTo: ['buyer'],
+    autoEvaluate: evaluateNoHypothecation,
   },
 
   // ── PHASE 2: NOC FROM ORIGINAL STATE RTO ──
@@ -83,6 +91,7 @@ export const outOfStateChecklist: ChecklistItem[] = [
     requiresOutOfState: true,
     dependsOn: ['O-03'],
     applicableTo: ['buyer'],
+    relatedForm: 'form28',
   },
   {
     id: 'O-05',

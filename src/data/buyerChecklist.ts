@@ -1,4 +1,13 @@
 import type { ChecklistItem } from '../types/checklist';
+import {
+  evaluateChassisEngineMatch,
+  evaluateInsuranceValid,
+  evaluateMaharashtraPlate,
+  evaluateNoHypothecation,
+  evaluateOwnerNameMatch,
+  evaluatePucValid,
+  evaluateVahanCheck,
+} from './autoEvaluators';
 
 export const buyerChecklist: ChecklistItem[] = [
   // ── PHASE 1: PRE-PURCHASE VERIFICATION ──
@@ -30,6 +39,7 @@ export const buyerChecklist: ChecklistItem[] = [
       'Only after all fields are clean should you move forward.',
     ],
     applicableTo: ['buyer'],
+    autoEvaluate: evaluateVahanCheck,
   },
   {
     id: 'B-02',
@@ -49,6 +59,7 @@ export const buyerChecklist: ChecklistItem[] = [
     ],
     dependsOn: ['B-01'],
     applicableTo: ['buyer'],
+    autoEvaluate: evaluateOwnerNameMatch,
   },
   {
     id: 'B-03',
@@ -68,6 +79,7 @@ export const buyerChecklist: ChecklistItem[] = [
     ],
     dependsOn: ['B-02'],
     applicableTo: ['buyer'],
+    autoEvaluate: evaluateChassisEngineMatch,
   },
   {
     id: 'B-04',
@@ -93,6 +105,7 @@ export const buyerChecklist: ChecklistItem[] = [
     ],
     dependsOn: ['B-03'],
     applicableTo: ['buyer'],
+    autoEvaluate: evaluateNoHypothecation,
   },
   {
     id: 'B-05',
@@ -167,6 +180,7 @@ export const buyerChecklist: ChecklistItem[] = [
     ],
     dependsOn: ['B-07'],
     applicableTo: ['buyer'],
+    autoEvaluate: evaluateInsuranceValid,
   },
   {
     id: 'B-09',
@@ -186,6 +200,7 @@ export const buyerChecklist: ChecklistItem[] = [
     ],
     dependsOn: ['B-08'],
     applicableTo: ['buyer'],
+    autoEvaluate: evaluatePucValid,
   },
   {
     id: 'B-10',
@@ -204,6 +219,7 @@ export const buyerChecklist: ChecklistItem[] = [
     ],
     dependsOn: ['B-09'],
     applicableTo: ['buyer'],
+    autoEvaluate: evaluateMaharashtraPlate,
   },
 
   // ── PHASE 2: DOCUMENTATION BEFORE DEAL ──
@@ -278,6 +294,7 @@ export const buyerChecklist: ChecklistItem[] = [
     ],
     dependsOn: ['B-12'],
     applicableTo: ['buyer'],
+    relatedForm: 'form29',
   },
   {
     id: 'B-14',
@@ -345,6 +362,7 @@ export const buyerChecklist: ChecklistItem[] = [
     ],
     dependsOn: ['B-15'],
     applicableTo: ['buyer'],
+    relatedForm: 'form30',
   },
   {
     id: 'B-17',
